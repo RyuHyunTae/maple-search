@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -16,7 +18,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
+      </head>
+      <body className={inter.className}>
+        <div id="root" style={{ height: "auto !important" }}>
+          <div className="flex min-h-screen flex-col" style={{ height: "auto !important", minHeight: "0px !important" }}>
+            {/* Header */}
+            <Header />
+            {children}
+            {/* Footer */}
+            <Footer />
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
