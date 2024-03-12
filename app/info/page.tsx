@@ -2,10 +2,14 @@
 
 import InfoItem from "@/components/info/InfoItem";
 import InfoItemDetail from "@/components/info/InfoItemDetail";
+import { ocidState } from "@/recoil/states";
+import { useEffect } from "react";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 
 const Info = () => {
   const [is_popup, setIs_popup] = useState(false);
+  const [tempOcid, setTempOcid] = useRecoilState(ocidState);
   return (
     <div className="flex-1 bg-body-green">
       <div className="flex justify-between lg:justify-center">
