@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ReactQueryWrapper from "@/react-query/ReactQueryWrapper";
 import RecoilRootWrapper from "@/recoil/RecoilRootWrapper";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -24,15 +25,17 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <div id="root" style={{ height: "auto !important" }}>
-          <RecoilRootWrapper>
-            <div className="flex min-h-screen flex-col" style={{ height: "auto !important", minHeight: "0px !important" }}>
-              {/* Header */}
-              <Header />
-              {children}
-              {/* Footer */}
-              <Footer />
-            </div>
-          </RecoilRootWrapper>
+          <ReactQueryWrapper>
+            <RecoilRootWrapper>
+              <div className="flex min-h-screen flex-col" style={{ height: "auto !important", minHeight: "0px !important" }}>
+                {/* Header */}
+                <Header />
+                {children}
+                {/* Footer */}
+                <Footer />
+              </div>
+            </RecoilRootWrapper>
+          </ReactQueryWrapper>
         </div>
       </body>
     </html>

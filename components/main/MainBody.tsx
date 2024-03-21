@@ -1,45 +1,41 @@
 "use client";
 
+import { getOcid } from "@/api/MapleApi";
 import { ocidState } from "@/recoil/states";
+import { API_KEY } from "@/util/APIKey";
+import { getCurrentDate } from "@/util/TimeUtil";
 import type { DatePickerProps } from "antd";
-import { DatePicker, Space } from "antd";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
 
-import { CharacterCashItemEquipment, getCharacterCashItemEquipment, getCharacterBasic, getOCID, setAPIKey } from "maplestory-open-api-js";
-import Link from "next/link";
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRouter } from "next/navigation";
+
+import { ChangeEvent, useState } from "react";
+import { useQuery } from "react-query";
+import { useSetRecoilState } from "recoil";
 
 const MainBody = () => {
-  const [tempOcid, setTempOcid] = useRecoilState(ocidState);
+  const dateFormat = "YYYY-MM-DD";
+  const nowDate = getCurrentDate();
 
-  useEffect(() => {
-    const fetch = async () => {
-      const API_KEY = "test_734756c171cad602112cfba8ba1c123ef8bac9244d24ddff4370ae8b79688a9b08d9120b690cf717d7c0c02fde15208c";
+  const setOcid = useSetRecoilState(ocidState);
+  const router = useRouter();
 
-      if (API_KEY) {
-        setAPIKey(API_KEY);
-      }
+  const [date, setDate] = useState<string | string[]>(nowDate);
+  const [searchText, setSearchText] = useState<string>("");
 
-      const { ocid } = await getOCID("촉발");
-      console.log("ocid", ocid);
-      setTempOcid(ocid);
-      const cashItemEquipment = await getCharacterBasic({ ocid });
-      console.log("cashItemEquipment", cashItemEquipment);
-    };
-    fetch();
-  }, []);
-
-  useEffect(() => {
-    console.log("tempOcid", tempOcid);
-  }, [tempOcid]);
-
-  const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date);
-    console.log(dateString);
+  const handleDateChange: DatePickerProps["onChange"] = (date, dateString) => {
+    setDate(dateString);
   };
 
-  const handleSearch = () => {
-    // const response = await fetch(API_URL);
+  const handleSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleSearch = async () => {
+    const result = await getOcid({ character_name: searchText });
+    setOcid(result.ocid);
+    router.push(`/info?searchText=${searchText}&date=${date}`);
   };
   return (
     <div className="flex-1 bg-body-green">
@@ -92,19 +88,19 @@ const MainBody = () => {
               <div className="mb-[10px] mt-[40px] text-center text-[40px] font-bold mo:text-[30px]">환산 주스탯</div>
               <div className="flex w-full flex-col gap-[8px] px-[48px] mo:px-[24px]">
                 <div className="flex items-center justify-start gap-4">
-                  <DatePicker onChange={onChange} />
+                  <DatePicker onChange={handleDateChange} defaultValue={dayjs(nowDate, dateFormat)} />
                   <div>데이터 기준 날짜 선택</div>
                 </div>
                 <div className="relative">
                   <input
                     className="flex h-[44px] w-full rounded-[2px] bg-[#EBEBEB] p-[15px_30px_15px_12px]"
                     placeholder="캐릭터 닉네임을 입력해주세요"
+                    onChange={handleSearchTextChange}
+                    value={searchText}
                   />
-                  <Link href="/info">
-                    <button className="absolute right-[13px] top-[13px] w-[18px]" onClick={handleSearch}>
-                      <img src="../img/icon_search_gray.png" title="검색하기" />
-                    </button>
-                  </Link>
+                  <button className="absolute right-[13px] top-[13px] w-[18px]" onClick={handleSearch}>
+                    <img src="../img/icon_search_gray.png" title="검색하기" />
+                  </button>
                 </div>
               </div>
               <div className='relative text-center before:absolute before:left-0 before:top-[10px] before:z-0 before:h-[1px] before:w-full before:bg-[#f2f2f5] before:content-[""]'>
