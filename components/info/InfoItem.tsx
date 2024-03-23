@@ -1,4 +1,6 @@
 import { ItemData } from "@/interface/ItemEquipment";
+import { itemDataState } from "@/recoil/states";
+import { useRecoilState } from "recoil";
 
 interface InfoItemProps {
   setIs_popup: (value: boolean) => void;
@@ -8,8 +10,11 @@ interface InfoItemProps {
 const InfoItem = (props: InfoItemProps) => {
   const { setIs_popup, value } = props;
 
+  const [itemData, setItemData] = useRecoilState<ItemData>(itemDataState);
+
   const onClick = () => {
     setIs_popup(true);
+    setItemData(value);
   };
   let potential_option_grade;
   let additional_potential_option_grade;

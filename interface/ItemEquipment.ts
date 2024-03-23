@@ -145,3 +145,20 @@ export interface ItemEquipment {
   item_equipment_preset_2: ItemData[];
   item_equipment_preset_3: ItemData[];
 }
+
+export interface ItemDataDetail {
+  name: string;
+  total: string;
+  base?: string; // Optional field
+  add?: string; // Optional field
+  etc?: string; // Optional field
+  starforce?: string; // Optional field
+}
+
+export interface ItemDetail {
+  [key: string]: ItemDataDetail;
+}
+
+export interface ItemDataArray {
+  [index: number]: ItemDetail;
+}
