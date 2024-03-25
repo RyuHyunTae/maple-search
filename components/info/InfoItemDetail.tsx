@@ -1,4 +1,4 @@
-import { ItemData, ItemDataArray, ItemDetail } from "@/interface/ItemEquipment";
+import { ItemData, ItemDetail } from "@/interface/ItemEquipment";
 import { itemDataState } from "@/recoil/states";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -139,6 +139,25 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
     setDetailInfo(datailInfo);
   }, [itemData]);
 
+  let _starforceRows = [];
+  let _starforceRow = [];
+  let _starforce;
+  let starforce_count = 1;
+  for (let i = 0; i < 25; i++) {
+    if (Number(itemData.starforce) < starforce_count) {
+      _starforceRow.push(<img className="my-2 h-[12px]" src="../img/icon_star_white.png" alt="star" />);
+    } else {
+      _starforceRow.push(<img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />);
+      starforce_count++;
+    }
+    if (i % 5 === 4) {
+      if (starforce_count === 1) break;
+      _starforce = <div className="flex">{_starforceRow}</div>;
+      _starforceRows.push(_starforce);
+      _starforceRow = [];
+    }
+  }
+
   return (
     <div
       id="ModalContainer"
@@ -148,48 +167,11 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
       <div className="z-15 fixed left-[50%] top-[50%] min-w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-[#000000de] text-[12px] text-white">
         <div className="flex h-full w-full flex-col divide-y divide-dashed divide-[#454545] p-[15px] [&>div]:py-[7px]">
           <div className="flex flex-col items-center justify-center gap-[5px]">
-            <div className="flex w-[200px] flex-wrap items-center justify-center gap-x-[5px]">
-              <div className="flex">
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-              </div>
-              <div className="flex">
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-              </div>
-              <div className="flex">
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-              </div>
-              <div className="flex">
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-              </div>
-              <div className="flex">
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_white.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_white.png" alt="star" />
-                <img className="my-2 h-[12px]" src="../img/icon_star_white.png" alt="star" />
-              </div>
-            </div>
-            <div className="text-[16px]  text-[rgb(204,255,0)]">위대한 시그너스의 </div>
+            <div className="flex w-[200px] flex-wrap items-center justify-center gap-x-[5px]">{_starforceRows}</div>
             <div className="text-[15px] font-bold">
-              {itemData.item_name} (+{itemData.scroll_upgrade})
+              {itemData.item_name} {Number(itemData.scroll_upgrade) !== 0 && `(+` + itemData.scroll_upgrade + `)`}
             </div>
-            <div>({itemData.potential_option_grade})</div>
+            {Number(itemData.potential_option_grade) !== 0 && <div>({itemData.potential_option_grade})</div>}
           </div>
           <div className="flex items-center gap-[10px] !py-[20px]">
             <div className="flex h-[70px] w-[70px] items-center justify-center rounded-[10px] border-2 border-[rgb(119,238,0)] bg-white py-[10px]">
@@ -214,45 +196,53 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
                   } else {
                     percent = false;
                   }
+                  let parentheses = false;
 
+                  if (Number(item[key].etc ?? 0) + Number(item[key].add ?? 0) + Number(item[key].starforce ?? 0) !== 0) {
+                    parentheses = true;
+                  } else {
+                    parentheses = false;
+                  }
                   return (
                     <div className="flex gap-3" key={idx}>
                       {Number(item[key].total) !== 0 && (
                         <>
-                          <div className="text-[#030f0f]">{item[key].name} : </div>
-                          <div className="text-[rgb(102,255,255)]">
+                          <div className={parentheses ? "text-[rgb(102,255,255)]" : "text-[#030f0f]"}>{item[key].name} : </div>
+                          <div className={parentheses ? "text-[rgb(102,255,255)]" : "text-[#030f0f]"}>
                             +{item[key].total}
                             {percent && "%"}
                           </div>
-                          <div className="flex gap-1">
-                            <div>(</div>
+                          {parentheses && (
+                            <div className="flex gap-1">
+                              <div>(</div>
 
-                            {Number(item[key].base) !== 0 && item[key].base !== undefined && (
-                              <div>
-                                {item[key].base}
-                                {percent && "%"}
-                              </div>
-                            )}
-                            {Number(item[key].etc) !== 0 && item[key].etc !== undefined && (
-                              <div className="text-[rgb(170,170,255)]">
-                                +{item[key].etc}
-                                {percent && "%"}
-                              </div>
-                            )}
-                            {Number(item[key].add) !== 0 && item[key].add !== undefined && (
-                              <div className="text-[rgb(204,255,0)]">
-                                +{item[key].add}
-                                {percent && "%"}
-                              </div>
-                            )}
-                            {Number(item[key].starforce) !== 0 && item[key].starforce !== undefined && (
-                              <div className="text-[rgb(255,204,0)]">
-                                +{item[key].starforce}
-                                {percent && "%"}
-                              </div>
-                            )}
-                            <div>)</div>
-                          </div>
+                              {Number(item[key].base) !== 0 && item[key].base !== undefined && (
+                                <div>
+                                  {item[key].base}
+                                  {percent && "%"}
+                                </div>
+                              )}
+                              {Number(item[key].etc) !== 0 && item[key].etc !== undefined && (
+                                <div className="text-[rgb(170,170,255)]">
+                                  +{item[key].etc}
+                                  {percent && "%"}
+                                </div>
+                              )}
+                              {Number(item[key].add) !== 0 && item[key].add !== undefined && (
+                                <div className="text-[rgb(204,255,0)]">
+                                  +{item[key].add}
+                                  {percent && "%"}
+                                </div>
+                              )}
+                              {Number(item[key].starforce) !== 0 && item[key].starforce !== undefined && (
+                                <div className="text-[rgb(255,204,0)]">
+                                  +{item[key].starforce}
+                                  {percent && "%"}
+                                </div>
+                              )}
+                              <div>)</div>
+                            </div>
+                          )}
                         </>
                       )}
                     </div>
@@ -261,50 +251,94 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
               )}
             </ul>
           </div>
-          <div>
-            <div className="flex items-center gap-[5px] text-[rgb(119,238,0)]">
+          {itemData.potential_option_grade !== null && (
+            <div>
               <div
-                className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                style={{
-                  textShadow:
-                    "rgb(68, 68, 68) -1px -1px 0px, rgb(68, 68, 68) 1px -1px 0px, rgb(68, 68, 68) -1px 1px 0px, rgb(68, 68, 68) 1px 1px 0px",
-                }}
+                className={
+                  itemData.potential_option_grade === "레전드리"
+                    ? "flex items-center gap-[5px] text-[rgb(119,238,0)]"
+                    : itemData.potential_option_grade === "유니크"
+                    ? "flex items-center gap-[5px] text-[rgb(255,187,0)]"
+                    : itemData.potential_option_grade === "에픽"
+                    ? "flex items-center gap-[5px] text-[rgb(170,17,238)]"
+                    : "flex items-center gap-[5px] text-[rgb(34,187,255)]"
+                }
               >
-                L
+                <div
+                  className={
+                    itemData.potential_option_grade === "레전드리"
+                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                      : itemData.potential_option_grade === "유니크"
+                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(255,187,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                      : itemData.potential_option_grade === "에픽"
+                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(170,17,238)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                      : "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(34,187,255)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                  }
+                  style={{
+                    textShadow:
+                      "rgb(68, 68, 68) -1px -1px 0px, rgb(68, 68, 68) 1px -1px 0px, rgb(68, 68, 68) -1px 1px 0px, rgb(68, 68, 68) 1px 1px 0px",
+                  }}
+                >
+                  L
+                </div>
+                <div>잠재옵션</div>
               </div>
-              <div>잠재옵션</div>
+              <ul>
+                <div>{itemData.potential_option_1}</div>
+                <div>{itemData.potential_option_2}</div>
+                <div>{itemData.potential_option_3}</div>
+              </ul>
             </div>
-            <ul>
-              <div>공격력 : +12%</div>
-              <div>보스 몬스터 공격 시 데미지 : +30%</div>
-              <div>보스 몬스터 공격 시 데미지 : +30%</div>
-            </ul>
-          </div>
-          <div>
-            <div className="flex items-center gap-[5px] text-[rgb(119,238,0)]">
+          )}
+
+          {itemData.additional_potential_option_grade !== null && (
+            <div>
               <div
-                className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                style={{
-                  textShadow:
-                    "rgb(68, 68, 68) -1px -1px 0px, rgb(68, 68, 68) 1px -1px 0px, rgb(68, 68, 68) -1px 1px 0px, rgb(68, 68, 68) 1px 1px 0px",
-                }}
+                className={
+                  itemData.additional_potential_option_grade === "레전드리"
+                    ? "flex items-center gap-[5px] text-[rgb(119,238,0)]"
+                    : itemData.additional_potential_option_grade === "유니크"
+                    ? "flex items-center gap-[5px] text-[rgb(255,187,0)]"
+                    : itemData.additional_potential_option_grade === "에픽"
+                    ? "flex items-center gap-[5px] text-[rgb(170,17,238)]"
+                    : "flex items-center gap-[5px] text-[rgb(34,187,255)]"
+                }
               >
-                L
+                <div
+                  className={
+                    itemData.additional_potential_option_grade === "레전드리"
+                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                      : itemData.additional_potential_option_grade === "유니크"
+                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(255,187,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                      : itemData.additional_potential_option_grade === "에픽"
+                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(170,17,238)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                      : "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(34,187,255)] text-center text-[9px] font-semibold leading-[9px] text-white"
+                  }
+                  style={{
+                    textShadow:
+                      "rgb(68, 68, 68) -1px -1px 0px, rgb(68, 68, 68) 1px -1px 0px, rgb(68, 68, 68) -1px 1px 0px, rgb(68, 68, 68) 1px 1px 0px",
+                  }}
+                >
+                  L
+                </div>
+                <div>에디셔널 잠재옵션</div>
               </div>
-              <div>에디셔널 잠재옵션</div>
+              <ul>
+                <div>{itemData.additional_potential_option_1}</div>
+                <div>{itemData.additional_potential_option_2}</div>
+                <div>{itemData.additional_potential_option_3}</div>
+              </ul>
             </div>
-            <ul>
-              <div>공격력 : +12%</div>
-              <div>DEX : +9%</div>
-              <div>공격력 : +9%</div>
-            </ul>
-          </div>
-          <div>
-            <div className="flex flex-col items-start gap-[5px]">
-              <div className="flex items-center text-yellow-300">위대한 시그너스의 소울 적용</div>
-              <div className="flex items-center">공격력 : +3%</div>
+          )}
+
+          {itemData.soul_name !== null && (
+            <div>
+              <div className="flex flex-col items-start gap-[5px]">
+                <div className="flex items-center text-yellow-300">{itemData.soul_name}</div>
+                <div className="flex items-center">{itemData.soul_option}</div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
