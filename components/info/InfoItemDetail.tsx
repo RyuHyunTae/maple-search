@@ -1,19 +1,18 @@
 import { ItemData, ItemDetail } from "@/interface/ItemEquipment";
-import { itemDataState } from "@/recoil/states";
+import { itemDataState, itemDetailPopupState } from "@/recoil/states";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
-interface InfoItemDetailProps {
-  setIs_popup: (value: boolean) => void;
-}
+interface InfoItemDetailProps {}
 
 const InfoItemDetail = (props: InfoItemDetailProps) => {
-  const { setIs_popup } = props;
+  const {} = props;
   const [itemData, setItemData] = useRecoilState<ItemData>(itemDataState);
+  const [itemDetailPopup, setItemDetailPopup] = useRecoilState<boolean>(itemDetailPopupState);
   const [detailInfo, setDetailInfo] = useState<ItemDetail[]>([]);
   const onClick = () => {
-    setIs_popup(false);
+    setItemDetailPopup(false);
   };
 
   useEffect(() => {
@@ -264,23 +263,23 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
                     : "flex items-center gap-[5px] text-[rgb(34,187,255)]"
                 }
               >
-                <div
-                  className={
-                    itemData.potential_option_grade === "레전드리"
-                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                      : itemData.potential_option_grade === "유니크"
-                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(255,187,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                      : itemData.potential_option_grade === "에픽"
-                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(170,17,238)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                      : "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(34,187,255)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                  }
-                  style={{
-                    textShadow:
-                      "rgb(68, 68, 68) -1px -1px 0px, rgb(68, 68, 68) 1px -1px 0px, rgb(68, 68, 68) -1px 1px 0px, rgb(68, 68, 68) 1px 1px 0px",
-                  }}
-                >
-                  L
-                </div>
+                {itemData.potential_option_grade === "레전드리" ? (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    L
+                  </div>
+                ) : itemData.potential_option_grade === "유니크" ? (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(255,187,0)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    U
+                  </div>
+                ) : itemData.potential_option_grade === "에픽" ? (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(170,17,238)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    E
+                  </div>
+                ) : (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(34,187,255)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    R
+                  </div>
+                )}
                 <div>잠재옵션</div>
               </div>
               <ul>
@@ -304,23 +303,23 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
                     : "flex items-center gap-[5px] text-[rgb(34,187,255)]"
                 }
               >
-                <div
-                  className={
-                    itemData.additional_potential_option_grade === "레전드리"
-                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                      : itemData.additional_potential_option_grade === "유니크"
-                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(255,187,0)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                      : itemData.additional_potential_option_grade === "에픽"
-                      ? "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(170,17,238)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                      : "mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(34,187,255)] text-center text-[9px] font-semibold leading-[9px] text-white"
-                  }
-                  style={{
-                    textShadow:
-                      "rgb(68, 68, 68) -1px -1px 0px, rgb(68, 68, 68) 1px -1px 0px, rgb(68, 68, 68) -1px 1px 0px, rgb(68, 68, 68) 1px 1px 0px",
-                  }}
-                >
-                  L
-                </div>
+                {itemData.additional_potential_option_grade === "레전드리" ? (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(119,238,0)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    L
+                  </div>
+                ) : itemData.additional_potential_option_grade === "유니크" ? (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(255,187,0)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    U
+                  </div>
+                ) : itemData.additional_potential_option_grade === "에픽" ? (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(170,17,238)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    E
+                  </div>
+                ) : (
+                  <div className="mt-[2px] h-[12px] w-[12px] rounded-[2px] border-[1px] bg-[rgb(34,187,255)] text-center text-[9px] font-semibold leading-[9px] text-white">
+                    R
+                  </div>
+                )}
                 <div>에디셔널 잠재옵션</div>
               </div>
               <ul>

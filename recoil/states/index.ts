@@ -133,3 +133,8 @@ export const itemDataState = atom<ItemData>({
     date_expire: null,
   },
 });
+
+export const itemDetailPopupState = atom<boolean>({
+  key: "itemDetailPopupState",
+  default: false,
+});

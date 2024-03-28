@@ -33,8 +33,8 @@ const MainBody = () => {
   };
 
   const handleSearch = async () => {
-    const result = await getOcid({ character_name: searchText });
-    setOcid(result.ocid);
+    // const result = await getOcid({ character_name: searchText });
+    // setOcid(result.ocid);
     router.push(`/info?searchText=${searchText}&date=${date}`);
   };
   return (
