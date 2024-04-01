@@ -139,3 +139,33 @@ export const getCharactorDojang = async (params: APIParams) => {
   const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/dojang", config);
   return data;
 };
+
+export const getCharactorLinkSkill = async (params: APIParams) => {
+  const { ocid, date } = params;
+  const config: AxiosRequestConfig = {
+    params: { ocid, date }, // params 객체를 설정
+    headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
+  };
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/link-skill", config);
+  return data;
+};
+
+export const getUserUnion = async (params: APIParams) => {
+  const { ocid, date } = params;
+  const config: AxiosRequestConfig = {
+    params: { ocid, date }, // params 객체를 설정
+    headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
+  };
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/user/union", config);
+  return data;
+};
+
+export const getUserUnionRaider = async (params: APIParams) => {
+  const { ocid, date } = params;
+  const config: AxiosRequestConfig = {
+    params: { ocid, date }, // params 객체를 설정
+    headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
+  };
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/user/union-raider", config);
+  return data;
+};

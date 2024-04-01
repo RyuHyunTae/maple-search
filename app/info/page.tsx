@@ -1,6 +1,18 @@
 "use client";
 
-import { getCharactorBasic, getCharactorHexaMatrix, getItemEquipment, getOcid } from "@/api/MapleApi";
+import {
+  getCharactorAbility,
+  getCharactorBasic,
+  getCharactorDojang,
+  getCharactorHexaMatrix,
+  getCharactorHyperStat,
+  getCharactorLinkSkill,
+  getCharactorStat,
+  getItemEquipment,
+  getOcid,
+  getUserUnion,
+  getUserUnionRaider,
+} from "@/api/MapleApi";
 import LeftInfo from "@/components/info/LeftInfo";
 import RightInfo from "@/components/info/RightInfo";
 import { HexaMatrix } from "@/interface/Hexamatrix";
@@ -11,6 +23,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { LinkSkill } from "@/interface/LinkSkill";
 
 interface InfoProps {
   params: {};
@@ -25,6 +38,7 @@ const Info = (props: InfoProps) => {
   const [item, setItem] = useState<ItemEquipment>();
   const [hexa, setHexa] = useState<HexaMatrix>();
   const [characterBasic, setCharacterBasic] = useState<CharacterBasic>();
+  const [linkSkill, setLinkSkill] = useState<LinkSkill>();
 
   const {
     data: data1,
@@ -54,6 +68,58 @@ const Info = (props: InfoProps) => {
     }
   );
 
+  const {
+    data: data4,
+    isLoading: isLoading4,
+    isError: isError4,
+  } = useQuery(["data4", { ocid: ocid, date: props.searchParams.date }], () => getCharactorLinkSkill({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
+
+  const {
+    data: data5,
+    isLoading: isLoading5,
+    isError: isError5,
+  } = useQuery(["data5", { ocid: ocid, date: props.searchParams.date }], () => getCharactorAbility({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
+
+  const {
+    data: data6,
+    isLoading: isLoading6,
+    isError: isError6,
+  } = useQuery(["data6", { ocid: ocid, date: props.searchParams.date }], () => getCharactorDojang({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
+
+  const {
+    data: data7,
+    isLoading: isLoading7,
+    isError: isError7,
+  } = useQuery(["data7", { ocid: ocid, date: props.searchParams.date }], () => getUserUnion({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
+
+  const {
+    data: data8,
+    isLoading: isLoading8,
+    isError: isError8,
+  } = useQuery(["data8", { ocid: ocid, date: props.searchParams.date }], () => getUserUnionRaider({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
+
+  const {
+    data: data9,
+    isLoading: isLoading9,
+    isError: isError9,
+  } = useQuery(["data9", { ocid: ocid, date: props.searchParams.date }], () => getCharactorHyperStat({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
+
+  useEffect(() => {}, [data7]);
+
+  useEffect(() => {}, [data8]);
+
   useEffect(() => {
     setItem(data1);
   }, [data1]);
@@ -64,11 +130,13 @@ const Info = (props: InfoProps) => {
 
   useEffect(() => {
     setHexa(data3);
-  });
+  }, [data3]);
 
   useEffect(() => {
-    console.log("!!", ocid);
-  }, [ocid]);
+    setLinkSkill(data4);
+  }, [data4]);
+
+  useEffect(() => {}, [ocid]);
 
   useEffect(() => {
     // setItem(tempItemData);
@@ -81,18 +149,12 @@ const Info = (props: InfoProps) => {
 
     settingData();
   }, []);
-
-  const handleCharacterItemEquipment = async (tempOcid = ocid) => {
-    const {
-      searchParams: { date },
-    } = props;
-  };
   return (
     <div className="flex-1 bg-body-green">
       <div className="flex justify-between lg:justify-center">
         <div className="mx-auto my-[25px] max-w-[100vw] mo:my-[10px] mo:max-w-full">
           <div className="flex gap-[20px] mo:flex-col">
-            <LeftInfo characterBasic={characterBasic} hexa={hexa} />
+            <LeftInfo characterBasic={characterBasic} hexa={hexa} title={item?.title} linkSkill={linkSkill} date={props.searchParams.date} />
             <RightInfo item={item} />
           </div>
         </div>

@@ -123,6 +123,14 @@ export type ItemData = {
   date_expire: string | null;
 };
 
+export interface title {
+  title_name: string;
+  title_icon: string;
+  title_description: string;
+  date_expire: string | null;
+  date_option_expire: string | null;
+}
+
 export interface ItemEquipment {
   date: string;
   character_gender: string;
@@ -131,13 +139,7 @@ export interface ItemEquipment {
   dragon_equipment: any[]; // 여기서 any 대신에 적절한 타입을 사용하는 것이 좋습니다.
   mechanic_equipment: any[];
 
-  title: {
-    title_name: string;
-    title_icon: string;
-    title_description: string;
-    date_expire: string | null;
-    date_option_expire: string | null;
-  };
+  title: title;
 
   item_equipment: ItemData[];
 

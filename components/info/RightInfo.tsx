@@ -37,8 +37,8 @@ const RightInfo = (props: RightInfoProps) => {
         </div>
         <div className="mt-[10px] grid grid-cols-2 gap-5 mo:grid-cols-1">
           {item &&
-            item.item_equipment.map((value) => {
-              return <InfoItem value={value} />;
+            item.item_equipment.map((value, idx) => {
+              return <InfoItem value={value} key={idx} />;
             })}
         </div>
 
