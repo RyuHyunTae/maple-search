@@ -1,10 +1,11 @@
 import { AbilityInfo } from "@/interface/Ability";
 import { CharacterBasic } from "@/interface/character";
 import { Dojang } from "@/interface/Dojang";
-import { HexaMatrix } from "@/interface/Hexamatrix";
+import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
 import { HyperStat } from "@/interface/HyperStat";
 import { title } from "@/interface/ItemEquipment";
 import { LinkSkill } from "@/interface/LinkSkill";
+import { Symbol } from "@/interface/Symbol";
 import { Union } from "@/interface/Union";
 import { UnionRaider } from "@/interface/UnionRaider";
 import { useState } from "react";
@@ -21,6 +22,8 @@ interface LeftInfoProps {
   union: Union | undefined;
   unionRaider: UnionRaider | undefined;
   hyperStat: HyperStat | undefined;
+  symbol: Symbol | undefined;
+  hexaSum: HexaSum | undefined;
 }
 
 const LeftInfo = (props: LeftInfoProps) => {
@@ -35,11 +38,21 @@ const LeftInfo = (props: LeftInfoProps) => {
     union,
     unionRaider,
     hyperStat,
+    symbol,
+    hexaSum,
   } = props;
   const [isPopup, setIsPopup] = useState<boolean>(false);
+
+  const [btnState, setBtnState] = useState<string>("hexa");
+
   const handlePopup = () => {
     setIsPopup(!isPopup);
   };
+
+  const handleBtnState = (value: string) => {
+    setBtnState(value);
+  };
+
   return (
     <div className="relative flex h-fit flex-col gap-5 rounded-[10px] bg-white p-[20px_25px]">
       <div className="flex flex-col gap-3 ">
@@ -124,61 +137,106 @@ const LeftInfo = (props: LeftInfoProps) => {
         <hr />
       </div>
       <div className="flex w-full flex-col gap-[10px] text-[13px]">
-        <div className="flex items-center gap-3">
-          <div className="cursor-pointer">
-            <div className="inline-flex h-[22px] w-fit min-w-[87px] items-center justify-center rounded-[10px] border px-[10px] py-[3px] text-[13px] font-bold border-[#FFAE34] text-[#FFAE34] bg-[#FFFCE0]">
-              헥사
-            </div>
-          </div>
-          <div className="cursor-pointer">
-            <div className="inline-flex h-[22px] w-fit min-w-[87px] items-center justify-center rounded-[10px] border px-[10px] py-[3px] text-[13px] font-bold border-[#dfdfdf] text-[#c6c6c6] bg-[#fff]">
-              심볼
-            </div>
-          </div>
-        </div>
-        <div className="mt-2 flex flex-col items-start">
-          <div className="flex justify-center px-3">
-            <div className="my-3 grid grid-cols-8 grid-rows-1 flex-wrap items-center gap-x-[8px] self-start text-center">
-              {hexa?.character_hexa_core_equipment.map((value, idx) => {
-                return (
-                  <div key={idx}>
-                    <div className="flex flex-col items-center divide-y rounded-[5px] border">
-                      <img
-                        className="w-[28px] flex-1"
-                        src={
-                          hexa?.character_hexa_core_equipment.length - 1 !== idx
-                            ? `../img/CannonMaster_` + (idx + 1) + `.png`
-                            : `../img/General_1_0.png`
-                        }
-                        alt="캐논 버스터"
-                      />
-                      <div>{value.hexa_core_level}</div>
-                      <div className="text-[10px] ">
-                        {Math.round(value.hexa_core_level * 3.3 + 1)}%
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex w-fit items-center divide-x rounded-[10px] border py-6">
-            <div className="flex min-w-[75px] flex-col items-center px-7">
-              <img className="h-[35px] cursor-pointer" src="../img/sole_erda.png" alt="sole_erda" />
-              <div>
-                <strong>852</strong> 개
+        {btnState === "hexa" && (
+          <>
+            <div className="flex items-center gap-3">
+              <div className="cursor-pointer" onClick={() => handleBtnState("hexa")}>
+                <div className="inline-flex h-[22px] w-fit min-w-[87px] items-center justify-center rounded-[10px] border px-[10px] py-[3px] text-[13px] font-bold border-[#FFAE34] text-[#FFAE34] bg-[#FFFCE0]">
+                  헥사
+                </div>
               </div>
-            </div>
-            <div className="flex min-w-[75px] items-center px-7">
-              <div className="flex flex-col items-center">
-                <img className="h-[35px]" src="../img/sole_erda_piece.png" alt="sole_erda_piece" />
-                <div>
-                  <strong>23278</strong> 개
+              <div className="cursor-pointer" onClick={() => handleBtnState("symbol")}>
+                <div className="inline-flex h-[22px] w-fit min-w-[87px] items-center justify-center rounded-[10px] border px-[10px] py-[3px] text-[13px] font-bold border-[#dfdfdf] text-[#c6c6c6] bg-[#fff]">
+                  심볼
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+            <div className="mt-2 flex flex-col items-start">
+              <div className="flex justify-center px-3">
+                <div className="my-3 grid grid-cols-8 grid-rows-1 flex-wrap items-center gap-x-[8px] self-start text-center">
+                  {hexa?.character_hexa_core_equipment.map((value, idx) => {
+                    return (
+                      <div key={idx}>
+                        <div className="flex flex-col items-center divide-y rounded-[5px] border">
+                          <img
+                            className="w-[28px] flex-1"
+                            src={
+                              hexa?.character_hexa_core_equipment.length - 1 !== idx
+                                ? `../img/CannonMaster_` + (idx + 1) + `.png`
+                                : `../img/General_1_0.png`
+                            }
+                            alt="캐논 버스터"
+                          />
+                          <div>{value.hexa_core_level}</div>
+                          <div className="text-[10px] ">
+                            {Math.round(value.hexa_core_level * 3.3 + 1)}%
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex w-fit items-center divide-x rounded-[10px] border py-6">
+                <div className="flex min-w-[75px] flex-col items-center px-7">
+                  <img
+                    className="h-[35px] cursor-pointer"
+                    src="../img/sole_erda.png"
+                    alt="sole_erda"
+                  />
+                  <div>
+                    <strong>{hexaSum?.base}</strong> 개
+                  </div>
+                </div>
+                <div className="flex min-w-[75px] items-center px-7">
+                  <div className="flex flex-col items-center">
+                    <img
+                      className="h-[35px]"
+                      src="../img/sole_erda_piece.png"
+                      alt="sole_erda_piece"
+                    />
+                    <div>
+                      <strong>{hexaSum?.piece}</strong> 개
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+        {btnState === "symbol" && (
+          <>
+            <div className="flex items-center gap-3">
+              <div className="cursor-pointer" onClick={() => handleBtnState("hexa")}>
+                <div className="inline-flex h-[22px] w-fit min-w-[87px] items-center justify-center rounded-[10px] border px-[10px] py-[3px] text-[13px] font-bold border-[#dfdfdf] text-[#c6c6c6] bg-[#fff]">
+                  헥사
+                </div>
+              </div>
+              <div className="cursor-pointer" onClick={() => handleBtnState("symbol")}>
+                <div className="inline-flex h-[22px] w-fit min-w-[87px] items-center justify-center rounded-[10px] border px-[10px] py-[3px] text-[13px] font-bold border-[#509CA7] text-[#509CA7] bg-[#D9F4F8]">
+                  심볼
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 flex items-start gap-4">
+              <div className="flex justify-center px-3">
+                <div className="grid grid-cols-6 grid-rows-2 flex-wrap items-center gap-x-[5px] gap-y-[5px] self-start text-center">
+                  {symbol?.symbol.map((value, idx) => {
+                    return (
+                      <div
+                        className="flex flex-col items-center divide-y rounded-[10px] border p-3"
+                        key={idx}
+                      >
+                        <img className="w-[28px]" src={value.symbol_icon} alt={value.symbol_name} />
+                        <div>Lv.{value.symbol_level}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div className="flex gap-3">
         <div>

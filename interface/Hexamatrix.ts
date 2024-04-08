@@ -13,3 +13,8 @@ export interface HexaMatrix {
   date: string;
   character_hexa_core_equipment: HexaCore[];
 }
+
+export interface HexaSum {
+  base: number;
+  piece: number;
+}

@@ -8,6 +8,7 @@ import {
   getCharactorHyperStat,
   getCharactorLinkSkill,
   getCharactorStat,
+  getCharactorSymbolEquipment,
   getItemEquipment,
   getOcid,
   getUserUnion,
@@ -15,7 +16,7 @@ import {
 } from "@/api/MapleApi";
 import LeftInfo from "@/components/info/LeftInfo";
 import RightInfo from "@/components/info/RightInfo";
-import { HexaMatrix } from "@/interface/Hexamatrix";
+import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
 import { ItemEquipment } from "@/interface/ItemEquipment";
 import { CharacterBasic } from "@/interface/character";
 import { itemDetailPopupState, ocidState } from "@/recoil/states";
@@ -29,6 +30,7 @@ import { Dojang } from "@/interface/Dojang";
 import { Union } from "@/interface/Union";
 import { UnionRaider } from "@/interface/UnionRaider";
 import { HyperStat } from "@/interface/HyperStat";
+import { Symbol } from "@/interface/Symbol";
 
 interface InfoProps {
   params: {};
@@ -49,6 +51,9 @@ const Info = (props: InfoProps) => {
   const [union, setUnion] = useState<Union>();
   const [unionRaider, setUnionRaider] = useState<UnionRaider>();
   const [hyperStat, setHyperStat] = useState<HyperStat>();
+  const [symbol, setSymbol] = useState<Symbol>();
+
+  const [hexaSum, setHexaSum] = useState<HexaSum>();
 
   const {
     data: data1,
@@ -158,6 +163,18 @@ const Info = (props: InfoProps) => {
     }
   );
 
+  const {
+    data: data10,
+    isLoading: isLoading10,
+    isError: isError10,
+  } = useQuery(
+    ["data10", { ocid: ocid, date: props.searchParams.date }],
+    () => getCharactorSymbolEquipment({ ocid: ocid, date: props.searchParams.date }),
+    {
+      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+    }
+  );
+
   useEffect(() => {
     setItem(data1);
   }, [data1]);
@@ -167,6 +184,173 @@ const Info = (props: InfoProps) => {
   }, [data2]);
 
   useEffect(() => {
+    const skill = [
+      { base: 5, piece: 100 },
+      { base: 1, piece: 30 },
+      { base: 1, piece: 35 },
+      { base: 1, piece: 40 },
+      { base: 2, piece: 45 },
+      { base: 2, piece: 50 },
+      { base: 2, piece: 55 },
+      { base: 3, piece: 60 },
+      { base: 3, piece: 65 },
+      { base: 10, piece: 200 },
+      { base: 3, piece: 80 },
+      { base: 3, piece: 90 },
+      { base: 4, piece: 100 },
+      { base: 4, piece: 110 },
+      { base: 4, piece: 120 },
+      { base: 4, piece: 130 },
+      { base: 4, piece: 140 },
+      { base: 4, piece: 150 },
+      { base: 5, piece: 160 },
+      { base: 15, piece: 350 },
+      { base: 5, piece: 170 },
+      { base: 5, piece: 180 },
+      { base: 5, piece: 190 },
+      { base: 5, piece: 200 },
+      { base: 5, piece: 210 },
+      { base: 6, piece: 220 },
+      { base: 6, piece: 230 },
+      { base: 6, piece: 240 },
+      { base: 7, piece: 250 },
+      { base: 20, piece: 500 },
+    ];
+
+    const masterly = [
+      { base: 3, piece: 50 },
+      { base: 1, piece: 15 },
+      { base: 1, piece: 18 },
+      { base: 1, piece: 20 },
+      { base: 1, piece: 23 },
+      { base: 1, piece: 25 },
+      { base: 1, piece: 28 },
+      { base: 2, piece: 30 },
+      { base: 2, piece: 33 },
+      { base: 10, piece: 100 },
+      { base: 2, piece: 40 },
+      { base: 2, piece: 45 },
+      { base: 2, piece: 50 },
+      { base: 2, piece: 55 },
+      { base: 2, piece: 60 },
+      { base: 2, piece: 65 },
+      { base: 2, piece: 70 },
+      { base: 2, piece: 75 },
+      { base: 3, piece: 80 },
+      { base: 8, piece: 175 },
+      { base: 3, piece: 85 },
+      { base: 3, piece: 90 },
+      { base: 3, piece: 95 },
+      { base: 3, piece: 100 },
+      { base: 3, piece: 105 },
+      { base: 3, piece: 110 },
+      { base: 3, piece: 115 },
+      { base: 3, piece: 120 },
+      { base: 4, piece: 125 },
+      { base: 10, piece: 250 },
+    ];
+
+    const enhance = [
+      { base: 4, piece: 75 },
+      { base: 1, piece: 23 },
+      { base: 1, piece: 27 },
+      { base: 1, piece: 30 },
+      { base: 2, piece: 34 },
+      { base: 2, piece: 38 },
+      { base: 2, piece: 42 },
+      { base: 3, piece: 45 },
+      { base: 3, piece: 49 },
+      { base: 8, piece: 150 },
+      { base: 3, piece: 60 },
+      { base: 3, piece: 68 },
+      { base: 3, piece: 75 },
+      { base: 3, piece: 83 },
+      { base: 3, piece: 90 },
+      { base: 3, piece: 98 },
+      { base: 3, piece: 105 },
+      { base: 3, piece: 113 },
+      { base: 4, piece: 120 },
+      { base: 12, piece: 263 },
+      { base: 4, piece: 128 },
+      { base: 4, piece: 135 },
+      { base: 4, piece: 143 },
+      { base: 4, piece: 150 },
+      { base: 4, piece: 158 },
+      { base: 5, piece: 165 },
+      { base: 5, piece: 173 },
+      { base: 5, piece: 180 },
+      { base: 6, piece: 188 },
+      { base: 15, piece: 375 },
+    ];
+
+    const common = [
+      { base: 7, piece: 125 },
+      { base: 2, piece: 38 },
+      { base: 2, piece: 44 },
+      { base: 2, piece: 50 },
+      { base: 3, piece: 57 },
+      { base: 3, piece: 63 },
+      { base: 3, piece: 69 },
+      { base: 5, piece: 75 },
+      { base: 5, piece: 82 },
+      { base: 14, piece: 300 },
+      { base: 5, piece: 110 },
+      { base: 5, piece: 124 },
+      { base: 6, piece: 138 },
+      { base: 6, piece: 152 },
+      { base: 6, piece: 165 },
+      { base: 6, piece: 179 },
+      { base: 6, piece: 193 },
+      { base: 6, piece: 207 },
+      { base: 7, piece: 220 },
+      { base: 17, piece: 525 },
+      { base: 7, piece: 234 },
+      { base: 7, piece: 248 },
+      { base: 7, piece: 262 },
+      { base: 7, piece: 275 },
+      { base: 7, piece: 289 },
+      { base: 9, piece: 303 },
+      { base: 9, piece: 317 },
+      { base: 9, piece: 330 },
+      { base: 10, piece: 344 },
+      { base: 20, piece: 750 },
+    ];
+
+    let base_sum = 0;
+    let piece_sum = 0;
+
+    data3?.character_hexa_core_equipment.forEach((value: any) => {
+      switch (value.hexa_core_type) {
+        case "마스터리 코어":
+          for (let i = 0; i < value.hexa_core_level; i++) {
+            base_sum = base_sum + masterly[i].base;
+            piece_sum = piece_sum + masterly[i].piece;
+          }
+          break;
+        case "강화 코어":
+          for (let i = 0; i < value.hexa_core_level; i++) {
+            base_sum = base_sum + enhance[i].base;
+            piece_sum = piece_sum + enhance[i].piece;
+          }
+          break;
+        case "스킬 코어":
+          for (let i = 0; i < value.hexa_core_level; i++) {
+            base_sum = base_sum + skill[i].base;
+            piece_sum = piece_sum + skill[i].piece;
+          }
+          break;
+        case "공용 코어":
+          for (let i = 0; i < value.hexa_core_level; i++) {
+            base_sum = base_sum + common[i].base;
+            piece_sum = piece_sum + common[i].piece;
+          }
+          break;
+
+        default:
+          break;
+      }
+    });
+    setHexaSum({ base: base_sum, piece: piece_sum });
     setHexa(data3);
   }, [data3]);
 
@@ -195,6 +379,9 @@ const Info = (props: InfoProps) => {
   }, [data9]);
 
   useEffect(() => {
+    setSymbol(data10);
+  }, [data10]);
+  useEffect(() => {
     const settingData = async () => {
       const { searchText } = props.searchParams;
       const result = await getOcid({ character_name: searchText });
@@ -219,6 +406,8 @@ const Info = (props: InfoProps) => {
               union={union}
               unionRaider={unionRaider}
               hyperStat={hyperStat}
+              symbol={symbol}
+              hexaSum={hexaSum}
             />
             <RightInfo item={item} />
           </div>
