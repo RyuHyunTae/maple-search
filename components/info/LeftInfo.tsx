@@ -1,10 +1,10 @@
-import { AbilityInfo } from "@/interface/Ability";
+import { Ability, AbilityInfo } from "@/interface/Ability";
 import { CharacterBasic } from "@/interface/character";
 import { Dojang } from "@/interface/Dojang";
 import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
-import { HyperStat } from "@/interface/HyperStat";
-import { title } from "@/interface/ItemEquipment";
-import { LinkSkill } from "@/interface/LinkSkill";
+import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";
+import { ItemData, title } from "@/interface/ItemEquipment";
+import { LinkSkill, LinkSkillDetail } from "@/interface/LinkSkill";
 import { Symbol } from "@/interface/Symbol";
 import { Union } from "@/interface/Union";
 import { UnionRaider } from "@/interface/UnionRaider";
@@ -16,14 +16,14 @@ interface LeftInfoProps {
   characterBasic: CharacterBasic | undefined;
   date: string;
   title: title | undefined;
-  linkSkill: LinkSkill | undefined;
-  ability: AbilityInfo | undefined;
   dojang: Dojang | undefined;
   union: Union | undefined;
-  unionRaider: UnionRaider | undefined;
-  hyperStat: HyperStat | undefined;
   symbol: Symbol | undefined;
   hexaSum: HexaSum | undefined;
+  hyperStatFreeSet: HyperStatDetail[] | undefined;
+  abilityFreeSet: Ability[] | undefined;
+  unionRaiderFreeSet: string[] | undefined;
+  linkSkillFreeSet: LinkSkillDetail[] | undefined;
 }
 
 const LeftInfo = (props: LeftInfoProps) => {
@@ -31,15 +31,15 @@ const LeftInfo = (props: LeftInfoProps) => {
     characterBasic,
     hexa,
     title,
-    linkSkill,
     date,
-    ability,
     dojang,
     union,
-    unionRaider,
-    hyperStat,
     symbol,
     hexaSum,
+    hyperStatFreeSet,
+    abilityFreeSet,
+    unionRaiderFreeSet,
+    linkSkillFreeSet,
   } = props;
   const [isPopup, setIsPopup] = useState<boolean>(false);
 
@@ -70,11 +70,11 @@ const LeftInfo = (props: LeftInfoProps) => {
                 {isPopup && (
                   <InfoPopup
                     title={title}
-                    linkSkill={linkSkill}
                     handlePopup={handlePopup}
-                    ability={ability}
-                    unionRaider={unionRaider}
-                    hyperStat={hyperStat}
+                    unionRaiderFreeSet={unionRaiderFreeSet}
+                    hyperStatFreeSet={hyperStatFreeSet}
+                    abilityFreeSet={abilityFreeSet}
+                    linkSkillFreeSet={linkSkillFreeSet}
                   />
                 )}
               </div>

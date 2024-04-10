@@ -1,4 +1,4 @@
-interface Ability {
+export interface Ability {
   ability_no: string;
   ability_grade: string;
   ability_value: string;

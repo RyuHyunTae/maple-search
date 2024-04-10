@@ -1,4 +1,4 @@
-interface HyperStatDetail {
+export interface HyperStatDetail {
   stat_type: string;
   stat_point: number | null;
   stat_level: number | null;

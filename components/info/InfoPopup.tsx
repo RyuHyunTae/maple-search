@@ -1,20 +1,27 @@
-import { AbilityInfo } from "@/interface/Ability";
-import { HyperStat } from "@/interface/HyperStat";
+import { Ability, AbilityInfo } from "@/interface/Ability";
+import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";
 import { title } from "@/interface/ItemEquipment";
-import { LinkSkill } from "@/interface/LinkSkill";
+import { LinkSkill, LinkSkillDetail } from "@/interface/LinkSkill";
 import { UnionRaider } from "@/interface/UnionRaider";
 
 interface InfoPopupProps {
   title: title | undefined;
-  linkSkill: LinkSkill | undefined;
-  ability: AbilityInfo | undefined;
-  unionRaider: UnionRaider | undefined;
-  hyperStat: HyperStat | undefined;
+  unionRaiderFreeSet: string[] | undefined;
+  hyperStatFreeSet: HyperStatDetail[] | undefined;
+  abilityFreeSet: Ability[] | undefined;
+  linkSkillFreeSet: LinkSkillDetail[] | undefined;
   handlePopup: () => void;
 }
 
 const InfoPopup = (props: InfoPopupProps) => {
-  const { linkSkill, title, ability, unionRaider, hyperStat, handlePopup } = props;
+  const {
+    title,
+    unionRaiderFreeSet,
+    hyperStatFreeSet,
+    abilityFreeSet,
+    linkSkillFreeSet,
+    handlePopup,
+  } = props;
   return (
     <div className='relative z-[15] w-[45rem] max-w-[98vw] rounded-[5px] bg-[#000000de] text-[12px] text-white after:absolute after:left-[30px] after:top-0 after:ml-[-10px] after:mt-[-10px] after:h-0 after:w-0 after:border-[10px] after:border-t-0 after:border-solid after:border-transparent after:border-b-[#000000de] after:content-[""] mo:after:left-auto mo:after:right-[18px]'>
       <button
@@ -30,7 +37,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 어빌리티
               <div className="mt-3 flex flex-col rounded-xl text-[#fff]">
-                {ability?.ability_info.map((value, idx) => {
+                {abilityFreeSet?.map((value, idx) => {
                   return (
                     <div
                       className={
@@ -55,7 +62,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 유니온
               <div className="mt-3 flex flex-col rounded-xl border bg-[#ffffffde] p-3 text-black">
-                {unionRaider?.union_occupied_stat.map((value, idx) => {
+                {unionRaiderFreeSet?.map((value, idx) => {
                   return <div key={idx}>{value}</div>;
                 })}
               </div>
@@ -63,7 +70,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 링크
               <div className="mt-3 grid grid-cols-4 gap-y-[2px]">
-                {linkSkill?.character_link_skill.map((value, idx) => {
+                {linkSkillFreeSet?.map((value, idx) => {
                   return (
                     <div className="flex gap-[5px]" key={idx}>
                       <img src={value.skill_icon} title={value.skill_name} />
@@ -76,7 +83,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 하이퍼스탯
               <div className="mt-3 flex flex-col rounded-xl border bg-[#ffffffde] p-3 text-black">
-                {hyperStat?.hyper_stat_preset_1.map((value, idx) => {
+                {hyperStatFreeSet?.map((value, idx) => {
                   return (
                     <div className="flex gap-[5px]" key={idx}>
                       <div className="flex items-center">{value.stat_increase}</div>

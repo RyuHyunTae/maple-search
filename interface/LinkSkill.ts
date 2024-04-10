@@ -1,4 +1,4 @@
-interface LinkSkillDetail {
+export interface LinkSkillDetail {
   skill_name: string;
   skill_description: string;
   skill_level: number;

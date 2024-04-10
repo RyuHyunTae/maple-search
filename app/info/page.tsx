@@ -7,7 +7,6 @@ import {
   getCharactorHexaMatrix,
   getCharactorHyperStat,
   getCharactorLinkSkill,
-  getCharactorStat,
   getCharactorSymbolEquipment,
   getItemEquipment,
   getOcid,
@@ -17,19 +16,19 @@ import {
 import LeftInfo from "@/components/info/LeftInfo";
 import RightInfo from "@/components/info/RightInfo";
 import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
-import { ItemEquipment } from "@/interface/ItemEquipment";
+import { ItemData, ItemEquipment } from "@/interface/ItemEquipment";
 import { CharacterBasic } from "@/interface/character";
 import { itemDetailPopupState, ocidState } from "@/recoil/states";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { LinkSkill } from "@/interface/LinkSkill";
-import { AbilityInfo } from "@/interface/Ability";
+import { useRecoilState } from "recoil";
+import { LinkSkill, LinkSkillDetail } from "@/interface/LinkSkill";
+import { Ability, AbilityInfo } from "@/interface/Ability";
 import { Dojang } from "@/interface/Dojang";
 import { Union } from "@/interface/Union";
 import { UnionRaider } from "@/interface/UnionRaider";
-import { HyperStat } from "@/interface/HyperStat";
+import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";
 import { Symbol } from "@/interface/Symbol";
 
 interface InfoProps {
@@ -54,6 +53,12 @@ const Info = (props: InfoProps) => {
   const [symbol, setSymbol] = useState<Symbol>();
 
   const [hexaSum, setHexaSum] = useState<HexaSum>();
+
+  const [itemFreeSet, setItemFreeSet] = useState<ItemData[]>();
+  const [hyperStatFreeSet, setHyperStatFreeSet] = useState<HyperStatDetail[]>();
+  const [abilityFreeSet, setAbilityFreeSet] = useState<Ability[]>();
+  const [unionRaiderFreeSet, setUnionRaiderFreeSet] = useState<string[]>();
+  const [linkSkillFreeSet, setLinkSkillFreeSet] = useState<LinkSkillDetail[]>();
 
   const {
     data: data1,
@@ -177,6 +182,7 @@ const Info = (props: InfoProps) => {
 
   useEffect(() => {
     setItem(data1);
+    setItemFreeSet(data1?.item_equipment);
   }, [data1]);
 
   useEffect(() => {
@@ -356,10 +362,12 @@ const Info = (props: InfoProps) => {
 
   useEffect(() => {
     setLinkSkill(data4);
+    setLinkSkillFreeSet(data4?.character_link_skill);
   }, [data4]);
 
   useEffect(() => {
     setAbility(data5);
+    setAbilityFreeSet(data5?.ability_info);
   }, [data5]);
 
   useEffect(() => {
@@ -372,10 +380,25 @@ const Info = (props: InfoProps) => {
 
   useEffect(() => {
     setUnionRaider(data8);
+    setUnionRaiderFreeSet(data8?.union_occupied_stat);
   }, [data8]);
 
   useEffect(() => {
     setHyperStat(data9);
+    switch (data9?.use_preset_no) {
+      case "1":
+        setHyperStatFreeSet(data9?.hyper_stat_preset_1);
+        break;
+      case "2":
+        setHyperStatFreeSet(data9?.hyper_stat_preset_2);
+        break;
+      case "3":
+        setHyperStatFreeSet(data9?.hyper_stat_preset_3);
+        break;
+      default:
+        setHyperStatFreeSet(data9?.hyper_stat_preset_1);
+        break;
+    }
   }, [data9]);
 
   useEffect(() => {
@@ -399,15 +422,15 @@ const Info = (props: InfoProps) => {
               characterBasic={characterBasic}
               hexa={hexa}
               title={item?.title}
-              linkSkill={linkSkill}
               date={props.searchParams.date}
-              ability={ability}
               dojang={dojang}
               union={union}
-              unionRaider={unionRaider}
-              hyperStat={hyperStat}
               symbol={symbol}
               hexaSum={hexaSum}
+              hyperStatFreeSet={hyperStatFreeSet}
+              abilityFreeSet={abilityFreeSet}
+              unionRaiderFreeSet={unionRaiderFreeSet}
+              linkSkillFreeSet={linkSkillFreeSet}
             />
             <RightInfo item={item} />
           </div>
