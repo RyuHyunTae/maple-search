@@ -144,9 +144,13 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
   let starforce_count = 1;
   for (let i = 0; i < 25; i++) {
     if (Number(itemData.starforce) < starforce_count) {
-      _starforceRow.push(<img className="my-2 h-[12px]" src="../img/icon_star_white.png" alt="star" />);
+      _starforceRow.push(
+        <img className="my-2 h-[12px]" src="../img/icon_star_white.png" alt="star" />
+      );
     } else {
-      _starforceRow.push(<img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />);
+      _starforceRow.push(
+        <img className="my-2 h-[12px]" src="../img/icon_star_yellow.png" alt="star" />
+      );
       starforce_count++;
     }
     if (i % 5 === 4) {
@@ -166,11 +170,16 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
       <div className="z-15 fixed left-[50%] top-[50%] min-w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-[5px] bg-[#000000de] text-[12px] text-white">
         <div className="flex h-full w-full flex-col divide-y divide-dashed divide-[#454545] p-[15px] [&>div]:py-[7px]">
           <div className="flex flex-col items-center justify-center gap-[5px]">
-            <div className="flex w-[200px] flex-wrap items-center justify-center gap-x-[5px]">{_starforceRows}</div>
-            <div className="text-[15px] font-bold">
-              {itemData.item_name} {Number(itemData.scroll_upgrade) !== 0 && `(+` + itemData.scroll_upgrade + `)`}
+            <div className="flex w-[200px] flex-wrap items-center justify-center gap-x-[5px]">
+              {_starforceRows}
             </div>
-            {Number(itemData.potential_option_grade) !== 0 && <div>({itemData.potential_option_grade})</div>}
+            <div className="text-[15px] font-bold">
+              {itemData.item_name}{" "}
+              {Number(itemData.scroll_upgrade) !== 0 && `(+` + itemData.scroll_upgrade + `)`}
+            </div>
+            {Number(itemData.potential_option_grade) !== 0 && (
+              <div>({itemData.potential_option_grade})</div>
+            )}
           </div>
           <div className="flex items-center gap-[10px] !py-[20px]">
             <div className="flex h-[70px] w-[70px] items-center justify-center rounded-[10px] border-2 border-[rgb(119,238,0)] bg-white py-[10px]">
@@ -197,7 +206,12 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
                   }
                   let parentheses = false;
 
-                  if (Number(item[key].etc ?? 0) + Number(item[key].add ?? 0) + Number(item[key].starforce ?? 0) !== 0) {
+                  if (
+                    Number(item[key].etc ?? 0) +
+                      Number(item[key].add ?? 0) +
+                      Number(item[key].starforce ?? 0) !==
+                    0
+                  ) {
                     parentheses = true;
                   } else {
                     parentheses = false;
@@ -206,8 +220,14 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
                     <div className="flex gap-3" key={idx}>
                       {Number(item[key].total) !== 0 && (
                         <>
-                          <div className={parentheses ? "text-[rgb(102,255,255)]" : "text-[#030f0f]"}>{item[key].name} : </div>
-                          <div className={parentheses ? "text-[rgb(102,255,255)]" : "text-[#030f0f]"}>
+                          <div
+                            className={parentheses ? "text-[rgb(102,255,255)]" : "text-[#030f0f]"}
+                          >
+                            {item[key].name} :{" "}
+                          </div>
+                          <div
+                            className={parentheses ? "text-[rgb(102,255,255)]" : "text-[#030f0f]"}
+                          >
                             +{item[key].total}
                             {percent && "%"}
                           </div>
@@ -233,12 +253,13 @@ const InfoItemDetail = (props: InfoItemDetailProps) => {
                                   {percent && "%"}
                                 </div>
                               )}
-                              {Number(item[key].starforce) !== 0 && item[key].starforce !== undefined && (
-                                <div className="text-[rgb(255,204,0)]">
-                                  +{item[key].starforce}
-                                  {percent && "%"}
-                                </div>
-                              )}
+                              {Number(item[key].starforce) !== 0 &&
+                                item[key].starforce !== undefined && (
+                                  <div className="text-[rgb(255,204,0)]">
+                                    +{item[key].starforce}
+                                    {percent && "%"}
+                                  </div>
+                                )}
                               <div>)</div>
                             </div>
                           )}

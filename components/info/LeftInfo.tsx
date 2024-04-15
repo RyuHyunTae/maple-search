@@ -20,10 +20,10 @@ interface LeftInfoProps {
   union: Union | undefined;
   symbol: Symbol | undefined;
   hexaSum: HexaSum | undefined;
-  hyperStatFreeSet: HyperStatDetail[] | undefined;
-  abilityFreeSet: Ability[] | undefined;
-  unionRaiderFreeSet: string[] | undefined;
-  linkSkillFreeSet: LinkSkillDetail[] | undefined;
+  hyperStatPreSet: HyperStatDetail[] | undefined;
+  abilityPreSet: Ability[] | undefined;
+  unionRaiderPreSet: string[] | undefined;
+  linkSkillPreSet: LinkSkillDetail[] | undefined;
 }
 
 const LeftInfo = (props: LeftInfoProps) => {
@@ -36,10 +36,10 @@ const LeftInfo = (props: LeftInfoProps) => {
     union,
     symbol,
     hexaSum,
-    hyperStatFreeSet,
-    abilityFreeSet,
-    unionRaiderFreeSet,
-    linkSkillFreeSet,
+    hyperStatPreSet,
+    abilityPreSet,
+    unionRaiderPreSet,
+    linkSkillPreSet,
   } = props;
   const [isPopup, setIsPopup] = useState<boolean>(false);
 
@@ -71,10 +71,10 @@ const LeftInfo = (props: LeftInfoProps) => {
                   <InfoPopup
                     title={title}
                     handlePopup={handlePopup}
-                    unionRaiderFreeSet={unionRaiderFreeSet}
-                    hyperStatFreeSet={hyperStatFreeSet}
-                    abilityFreeSet={abilityFreeSet}
-                    linkSkillFreeSet={linkSkillFreeSet}
+                    unionRaiderPreSet={unionRaiderPreSet}
+                    hyperStatPreSet={hyperStatPreSet}
+                    abilityPreSet={abilityPreSet}
+                    linkSkillPreSet={linkSkillPreSet}
                   />
                 )}
               </div>
@@ -127,13 +127,13 @@ const LeftInfo = (props: LeftInfoProps) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-[54px] p-[11px] text-[14px]">
+        {/* <div className="flex gap-[54px] p-[11px] text-[14px]">
           <div className="font-bold">전투력</div>
           <div className="flex gap-5">
             <div className="false">2억 9444만 2997</div>
             <div className="cursor-pointer">[적용 중인 프리셋]</div>
           </div>
-        </div>
+        </div> */}
         <hr />
       </div>
       <div className="flex w-full flex-col gap-[10px] text-[13px]">

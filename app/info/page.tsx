@@ -18,7 +18,7 @@ import RightInfo from "@/components/info/RightInfo";
 import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
 import { ItemData, ItemEquipment } from "@/interface/ItemEquipment";
 import { CharacterBasic } from "@/interface/character";
-import { itemDetailPopupState, ocidState } from "@/recoil/states";
+import { itemDetailPopupState, ocidState, preSetState } from "@/recoil/states";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -30,6 +30,7 @@ import { Union } from "@/interface/Union";
 import { UnionRaider } from "@/interface/UnionRaider";
 import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";
 import { Symbol } from "@/interface/Symbol";
+import { PreSet } from "@/interface/PreSet";
 
 interface InfoProps {
   params: {};
@@ -40,6 +41,7 @@ const Info = (props: InfoProps) => {
   const [is_popup, setIs_popup] = useState(false);
   const [ocid, setOcid] = useRecoilState(ocidState);
   const [itemDetailPopup, setItemDetailPopup] = useRecoilState<boolean>(itemDetailPopupState);
+  const [preSet, setPreSet] = useRecoilState<PreSet>(preSetState);
 
   const [item, setItem] = useState<ItemEquipment>();
   const [hexa, setHexa] = useState<HexaMatrix>();
@@ -54,11 +56,11 @@ const Info = (props: InfoProps) => {
 
   const [hexaSum, setHexaSum] = useState<HexaSum>();
 
-  const [itemFreeSet, setItemFreeSet] = useState<ItemData[]>();
-  const [hyperStatFreeSet, setHyperStatFreeSet] = useState<HyperStatDetail[]>();
-  const [abilityFreeSet, setAbilityFreeSet] = useState<Ability[]>();
-  const [unionRaiderFreeSet, setUnionRaiderFreeSet] = useState<string[]>();
-  const [linkSkillFreeSet, setLinkSkillFreeSet] = useState<LinkSkillDetail[]>();
+  const [itemPreSet, setItemPreSet] = useState<ItemData[]>();
+  const [hyperStatPreSet, setHyperStatPreSet] = useState<HyperStatDetail[]>();
+  const [abilityPreSet, setAbilityPreSet] = useState<Ability[]>();
+  const [unionRaiderPreSet, setUnionRaiderPreSet] = useState<string[]>();
+  const [linkSkillPreSet, setLinkSkillPreSet] = useState<LinkSkillDetail[]>();
 
   const {
     data: data1,
@@ -182,7 +184,7 @@ const Info = (props: InfoProps) => {
 
   useEffect(() => {
     setItem(data1);
-    setItemFreeSet(data1?.item_equipment);
+    setItemPreSet(data1?.item_equipment);
   }, [data1]);
 
   useEffect(() => {
@@ -362,12 +364,12 @@ const Info = (props: InfoProps) => {
 
   useEffect(() => {
     setLinkSkill(data4);
-    setLinkSkillFreeSet(data4?.character_link_skill);
+    setLinkSkillPreSet(data4?.character_link_skill);
   }, [data4]);
 
   useEffect(() => {
     setAbility(data5);
-    setAbilityFreeSet(data5?.ability_info);
+    setAbilityPreSet(data5?.ability_info);
   }, [data5]);
 
   useEffect(() => {
@@ -380,23 +382,23 @@ const Info = (props: InfoProps) => {
 
   useEffect(() => {
     setUnionRaider(data8);
-    setUnionRaiderFreeSet(data8?.union_occupied_stat);
+    setUnionRaiderPreSet(data8?.union_occupied_stat);
   }, [data8]);
 
   useEffect(() => {
     setHyperStat(data9);
     switch (data9?.use_preset_no) {
       case "1":
-        setHyperStatFreeSet(data9?.hyper_stat_preset_1);
+        setHyperStatPreSet(data9?.hyper_stat_preset_1);
         break;
       case "2":
-        setHyperStatFreeSet(data9?.hyper_stat_preset_2);
+        setHyperStatPreSet(data9?.hyper_stat_preset_2);
         break;
       case "3":
-        setHyperStatFreeSet(data9?.hyper_stat_preset_3);
+        setHyperStatPreSet(data9?.hyper_stat_preset_3);
         break;
       default:
-        setHyperStatFreeSet(data9?.hyper_stat_preset_1);
+        setHyperStatPreSet(data9?.hyper_stat_preset_1);
         break;
     }
   }, [data9]);
@@ -404,6 +406,7 @@ const Info = (props: InfoProps) => {
   useEffect(() => {
     setSymbol(data10);
   }, [data10]);
+
   useEffect(() => {
     const settingData = async () => {
       const { searchText } = props.searchParams;
@@ -413,6 +416,112 @@ const Info = (props: InfoProps) => {
 
     settingData();
   }, []);
+
+  useEffect(() => {
+    switch (preSet.item) {
+      case "1":
+        setItemPreSet(item?.item_equipment_preset_1);
+        break;
+      case "2":
+        setItemPreSet(item?.item_equipment_preset_2);
+        break;
+      case "3":
+        setItemPreSet(item?.item_equipment_preset_3);
+        break;
+
+      case "0":
+      default:
+        setItemPreSet(item?.item_equipment);
+        break;
+    }
+  }, [preSet.item]);
+
+  useEffect(() => {
+    switch (preSet.hyper) {
+      case "1":
+        setHyperStatPreSet(hyperStat?.hyper_stat_preset_1);
+        break;
+      case "2":
+        setHyperStatPreSet(hyperStat?.hyper_stat_preset_2);
+        break;
+      case "3":
+        setHyperStatPreSet(hyperStat?.hyper_stat_preset_3);
+        break;
+      case "0":
+      default:
+        switch (hyperStat?.use_preset_no) {
+          case "1":
+            setHyperStatPreSet(hyperStat?.hyper_stat_preset_1);
+            break;
+          case "2":
+            setHyperStatPreSet(hyperStat?.hyper_stat_preset_2);
+            break;
+          case "3":
+            setHyperStatPreSet(hyperStat?.hyper_stat_preset_3);
+            break;
+          default:
+            setHyperStatPreSet(hyperStat?.hyper_stat_preset_1);
+            break;
+        }
+        break;
+    }
+  }, [preSet.hyper]);
+
+  useEffect(() => {
+    switch (preSet.ability) {
+      case "1":
+        setAbilityPreSet(ability?.ability_preset_1.ability_info);
+        break;
+      case "2":
+        setAbilityPreSet(ability?.ability_preset_2.ability_info);
+        break;
+      case "3":
+        setAbilityPreSet(ability?.ability_preset_3.ability_info);
+        break;
+
+      case "0":
+      default:
+        setAbilityPreSet(ability?.ability_info);
+        break;
+    }
+  }, [preSet.ability]);
+
+  useEffect(() => {
+    switch (preSet.union) {
+      case "1":
+        setUnionRaiderPreSet(unionRaider?.union_raider_preset_1.union_occupied_stat);
+        break;
+      case "2":
+        setUnionRaiderPreSet(unionRaider?.union_raider_preset_2.union_occupied_stat);
+        break;
+      case "3":
+        setUnionRaiderPreSet(unionRaider?.union_raider_preset_3.union_occupied_stat);
+        break;
+      case "0":
+      default:
+        setUnionRaiderPreSet(unionRaider?.union_occupied_stat);
+        break;
+    }
+  }, [preSet.union]);
+
+  useEffect(() => {
+    switch (preSet.link) {
+      case "1":
+        setLinkSkillPreSet(linkSkill?.character_link_skill_preset_1);
+        break;
+      case "2":
+        setLinkSkillPreSet(linkSkill?.character_link_skill_preset_2);
+        break;
+      case "3":
+        setLinkSkillPreSet(linkSkill?.character_link_skill_preset_3);
+        break;
+      case "0":
+      default:
+        setLinkSkillPreSet(linkSkill?.character_link_skill);
+        break;
+    }
+  }, [preSet.link]);
+
   return (
     <div className="flex-1 bg-body-green">
       <div className="flex justify-between lg:justify-center">
@@ -427,12 +536,12 @@ const Info = (props: InfoProps) => {
               union={union}
               symbol={symbol}
               hexaSum={hexaSum}
-              hyperStatFreeSet={hyperStatFreeSet}
-              abilityFreeSet={abilityFreeSet}
-              unionRaiderFreeSet={unionRaiderFreeSet}
-              linkSkillFreeSet={linkSkillFreeSet}
+              hyperStatPreSet={hyperStatPreSet}
+              abilityPreSet={abilityPreSet}
+              unionRaiderPreSet={unionRaiderPreSet}
+              linkSkillPreSet={linkSkillPreSet}
             />
-            <RightInfo item={item} />
+            <RightInfo itemPreSet={itemPreSet} />
           </div>
         </div>
       </div>

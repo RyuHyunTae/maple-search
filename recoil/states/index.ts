@@ -1,3 +1,4 @@
+import { PreSet } from "@/interface/PreSet";
 import { ItemData } from "@/interface/ItemEquipment";
 import { atom } from "recoil";
 
@@ -137,4 +138,15 @@ export const itemDataState = atom<ItemData>({
 export const itemDetailPopupState = atom<boolean>({
   key: "itemDetailPopupState",
   default: false,
+});
+
+export const preSetState = atom<PreSet>({
+  key: "preSetState",
+  default: {
+    item: "0",
+    hyper: "0",
+    ability: "0",
+    union: "0",
+    link: "0",
+  },
 });

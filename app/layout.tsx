@@ -27,7 +27,10 @@ export default function RootLayout({
         <div id="root" style={{ height: "auto !important" }}>
           <ReactQueryWrapper>
             <RecoilRootWrapper>
-              <div className="flex min-h-screen flex-col" style={{ height: "auto !important", minHeight: "0px !important" }}>
+              <div
+                className="flex min-h-screen flex-col"
+                style={{ height: "auto !important", minHeight: "0px !important" }}
+              >
                 {/* Header */}
                 <Header />
                 {children}

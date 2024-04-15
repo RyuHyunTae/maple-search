@@ -6,22 +6,16 @@ import { UnionRaider } from "@/interface/UnionRaider";
 
 interface InfoPopupProps {
   title: title | undefined;
-  unionRaiderFreeSet: string[] | undefined;
-  hyperStatFreeSet: HyperStatDetail[] | undefined;
-  abilityFreeSet: Ability[] | undefined;
-  linkSkillFreeSet: LinkSkillDetail[] | undefined;
+  unionRaiderPreSet: string[] | undefined;
+  hyperStatPreSet: HyperStatDetail[] | undefined;
+  abilityPreSet: Ability[] | undefined;
+  linkSkillPreSet: LinkSkillDetail[] | undefined;
   handlePopup: () => void;
 }
 
 const InfoPopup = (props: InfoPopupProps) => {
-  const {
-    title,
-    unionRaiderFreeSet,
-    hyperStatFreeSet,
-    abilityFreeSet,
-    linkSkillFreeSet,
-    handlePopup,
-  } = props;
+  const { title, unionRaiderPreSet, hyperStatPreSet, abilityPreSet, linkSkillPreSet, handlePopup } =
+    props;
   return (
     <div className='relative z-[15] w-[45rem] max-w-[98vw] rounded-[5px] bg-[#000000de] text-[12px] text-white after:absolute after:left-[30px] after:top-0 after:ml-[-10px] after:mt-[-10px] after:h-0 after:w-0 after:border-[10px] after:border-t-0 after:border-solid after:border-transparent after:border-b-[#000000de] after:content-[""] mo:after:left-auto mo:after:right-[18px]'>
       <button
@@ -37,7 +31,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 어빌리티
               <div className="mt-3 flex flex-col rounded-xl text-[#fff]">
-                {abilityFreeSet?.map((value, idx) => {
+                {abilityPreSet?.map((value, idx) => {
                   return (
                     <div
                       className={
@@ -62,7 +56,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 유니온
               <div className="mt-3 flex flex-col rounded-xl border bg-[#ffffffde] p-3 text-black">
-                {unionRaiderFreeSet?.map((value, idx) => {
+                {unionRaiderPreSet?.map((value, idx) => {
                   return <div key={idx}>{value}</div>;
                 })}
               </div>
@@ -70,7 +64,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 링크
               <div className="mt-3 grid grid-cols-4 gap-y-[2px]">
-                {linkSkillFreeSet?.map((value, idx) => {
+                {linkSkillPreSet?.map((value, idx) => {
                   return (
                     <div className="flex gap-[5px]" key={idx}>
                       <img src={value.skill_icon} title={value.skill_name} />
@@ -83,7 +77,7 @@ const InfoPopup = (props: InfoPopupProps) => {
             <div className="my-1 py-1">
               - 하이퍼스탯
               <div className="mt-3 flex flex-col rounded-xl border bg-[#ffffffde] p-3 text-black">
-                {hyperStatFreeSet?.map((value, idx) => {
+                {hyperStatPreSet?.map((value, idx) => {
                   return (
                     <div className="flex gap-[5px]" key={idx}>
                       <div className="flex items-center">{value.stat_increase}</div>
@@ -93,13 +87,11 @@ const InfoPopup = (props: InfoPopupProps) => {
               </div>
             </div>
             <div className="py-13 my-1 gap-3">
-              - 길드 노블레스 / 드랍 메획 수치
+              - 길드 노블레스
               <div className="mt-3 flex gap-3">
                 <div className="rounded-xl border bg-[#ffffffde] px-3 text-black">
                   길드노블 : 60p
                 </div>
-                <div className="rounded-xl border bg-[#ffffffde] px-3 text-black">드랍 12%</div>
-                <div className="rounded-xl border bg-[#ffffffde] px-3 text-black">메획 16%</div>
               </div>
             </div>
             <div className="my-1 py-1">
