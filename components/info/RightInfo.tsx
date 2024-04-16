@@ -1,7 +1,8 @@
 import { ItemData, ItemEquipment } from "@/interface/ItemEquipment";
 import { PreSet } from "@/interface/PreSet";
-import { itemDetailPopupState, preSetState } from "@/recoil/states";
+import { categoryState, itemDetailPopupState, preSetState } from "@/recoil/states";
 import { Button, Flex, Popover, Segmented } from "antd";
+import classNames from "classnames";
 import { useRecoilState } from "recoil";
 import InfoItem from "./InfoItem";
 import InfoItemDetail from "./InfoItemDetail";
@@ -14,8 +15,17 @@ const RightInfo = (props: RightInfoProps) => {
   const { itemPreSet } = props;
 
   const [itemDetailPopup, setItemDetailPopup] = useRecoilState<boolean>(itemDetailPopupState);
-
   const [preSet, setPreSet] = useRecoilState<PreSet>(preSetState);
+  const [category, setCategory] = useRecoilState<number>(categoryState);
+
+  const handleCategory = (value: number) => {
+    setCategory(value);
+  };
+
+  const handlePreSet = (key: string, value: string) => {
+    setPreSet({ ...preSet, [key]: value });
+    setCategory(0);
+  };
 
   const text = <span>Title</span>;
   const content = (
@@ -24,45 +34,38 @@ const RightInfo = (props: RightInfoProps) => {
         <div>장비</div>
         <Segmented
           options={["0", "1", "2", "3"]}
-          onChange={(value) => {
-            setPreSet({ ...preSet, item: value });
+          onChange={(value: string) => {
+            handlePreSet("item", value);
           }}
         />
         <div>하이퍼스탯</div>
         <Segmented
           options={["0", "1", "2", "3"]}
-          onChange={(value) => {
-            setPreSet({ ...preSet, hyper: value });
+          onChange={(value: string) => {
+            handlePreSet("hyper", value);
           }}
         />
         <div>어빌리티</div>
         <Segmented
           options={["0", "1", "2", "3"]}
-          onChange={(value) => {
-            setPreSet({ ...preSet, ability: value });
+          onChange={(value: string) => {
+            handlePreSet("ability", value);
           }}
         />
         <div>유니온</div>
         <Segmented
           options={["0", "1", "2", "3"]}
-          onChange={(value) => {
-            setPreSet({ ...preSet, union: value });
+          onChange={(value: string) => {
+            handlePreSet("union", value);
           }}
         />
         <div>링크</div>
         <Segmented
           options={["0", "1", "2", "3"]}
-          onChange={(value) => {
-            setPreSet({ ...preSet, link: value });
+          onChange={(value: string) => {
+            handlePreSet("link", value);
           }}
         />
-      </div>
-      <hr />
-      <div className="mt-3 flex justify-end gap-3">
-        <Flex gap="small" wrap="wrap">
-          <Button size="small">취소</Button>
-          <Button size="small">적용</Button>
-        </Flex>
       </div>
     </div>
   );
@@ -72,16 +75,68 @@ const RightInfo = (props: RightInfoProps) => {
       <div className="">
         <div className="flex items-center justify-between">
           <div className="flex gap-[5px]">
-            <button className="rounded-[20px] border p-[5px_15px] text-[14px] font-bold text-[#5C5C5C] hover:bg-hover-gray bg-hover-gray mo:text-[11px]">
+            <button
+              className={classNames(
+                "rounded-[20px]",
+                "border",
+                "p-[5px_15px]",
+                "text-[14px]",
+                "font-bold",
+                "text-[#5C5C5C]",
+                "hover:bg-hover-gray",
+                { "bg-hover-gray": category === 0 },
+                "mo:text-[11px]"
+              )}
+              onClick={() => handleCategory(0)}
+            >
               ALL
             </button>
-            <button className="rounded-[20px] border p-[5px_15px] text-[14px] font-bold text-[#5C5C5C] hover:bg-hover-gray mo:text-[11px]">
+            <button
+              className={classNames(
+                "rounded-[20px]",
+                "border",
+                "p-[5px_15px]",
+                "text-[14px]",
+                "font-bold",
+                "text-[#5C5C5C]",
+                "hover:bg-hover-gray",
+                { "bg-hover-gray": category === 1 },
+                "mo:text-[11px]"
+              )}
+              onClick={() => handleCategory(1)}
+            >
               무보엠
             </button>
-            <button className="rounded-[20px] border p-[5px_15px] text-[14px] font-bold text-[#5C5C5C] hover:bg-hover-gray mo:text-[11px]">
+            <button
+              className={classNames(
+                "rounded-[20px]",
+                "border",
+                "p-[5px_15px]",
+                "text-[14px]",
+                "font-bold",
+                "text-[#5C5C5C]",
+                "hover:bg-hover-gray",
+                { "bg-hover-gray": category === 2 },
+                "mo:text-[11px]"
+              )}
+              onClick={() => handleCategory(2)}
+            >
               방어구
             </button>
-            <button className="rounded-[20px] border p-[5px_15px] text-[14px] font-bold text-[#5C5C5C] hover:bg-hover-gray mo:text-[11px]">
+            <button
+              className={classNames(
+                "rounded-[20px]",
+                "border",
+                "p-[5px_15px]",
+                "text-[14px]",
+                "font-bold",
+                "text-[#5C5C5C]",
+                "hover:bg-hover-gray",
+                { "bg-hover-gray": category === 3 },
+                "mo:text-[11px]"
+              )}
+              onClick={() => handleCategory(3)}
+            >
               장신구
             </button>
           </div>

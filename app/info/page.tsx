@@ -7,6 +7,7 @@ import {
   getCharactorHexaMatrix,
   getCharactorHyperStat,
   getCharactorLinkSkill,
+  getCharactorSetEffect,
   getCharactorSymbolEquipment,
   getItemEquipment,
   getOcid,
@@ -18,7 +19,7 @@ import RightInfo from "@/components/info/RightInfo";
 import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
 import { ItemData, ItemEquipment } from "@/interface/ItemEquipment";
 import { CharacterBasic } from "@/interface/character";
-import { itemDetailPopupState, ocidState, preSetState } from "@/recoil/states";
+import { categoryState, itemDetailPopupState, ocidState, preSetState } from "@/recoil/states";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -31,6 +32,7 @@ import { UnionRaider } from "@/interface/UnionRaider";
 import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";
 import { Symbol } from "@/interface/Symbol";
 import { PreSet } from "@/interface/PreSet";
+import { SetEffect } from "@/interface/SetEffect";
 
 interface InfoProps {
   params: {};
@@ -38,10 +40,10 @@ interface InfoProps {
 }
 
 const Info = (props: InfoProps) => {
-  const [is_popup, setIs_popup] = useState(false);
   const [ocid, setOcid] = useRecoilState(ocidState);
   const [itemDetailPopup, setItemDetailPopup] = useRecoilState<boolean>(itemDetailPopupState);
   const [preSet, setPreSet] = useRecoilState<PreSet>(preSetState);
+  const [category, setCategory] = useRecoilState<number>(categoryState);
 
   const [item, setItem] = useState<ItemEquipment>();
   const [hexa, setHexa] = useState<HexaMatrix>();
@@ -53,6 +55,7 @@ const Info = (props: InfoProps) => {
   const [unionRaider, setUnionRaider] = useState<UnionRaider>();
   const [hyperStat, setHyperStat] = useState<HyperStat>();
   const [symbol, setSymbol] = useState<Symbol>();
+  const [setEffect, setSetEffect] = useState<SetEffect[]>();
 
   const [hexaSum, setHexaSum] = useState<HexaSum>();
 
@@ -61,6 +64,8 @@ const Info = (props: InfoProps) => {
   const [abilityPreSet, setAbilityPreSet] = useState<Ability[]>();
   const [unionRaiderPreSet, setUnionRaiderPreSet] = useState<string[]>();
   const [linkSkillPreSet, setLinkSkillPreSet] = useState<LinkSkillDetail[]>();
+
+  const [nowItem, setNowItem] = useState<ItemData[]>();
 
   const {
     data: data1,
@@ -182,9 +187,22 @@ const Info = (props: InfoProps) => {
     }
   );
 
+  const {
+    data: data11,
+    isLoading: isLoading11,
+    isError: isError11,
+  } = useQuery(
+    ["data11", { ocid: ocid, date: props.searchParams.date }],
+    () => getCharactorSetEffect({ ocid: ocid, date: props.searchParams.date }),
+    {
+      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+    }
+  );
+
   useEffect(() => {
     setItem(data1);
     setItemPreSet(data1?.item_equipment);
+    setNowItem(data1?.item_equipment);
   }, [data1]);
 
   useEffect(() => {
@@ -408,6 +426,13 @@ const Info = (props: InfoProps) => {
   }, [data10]);
 
   useEffect(() => {
+    const filterSetEffect = data11?.set_effect.filter(
+      (value: SetEffect) => value.set_effect_info.length !== 0
+    );
+    setSetEffect(filterSetEffect);
+  }, [data11]);
+
+  useEffect(() => {
     const settingData = async () => {
       const { searchText } = props.searchParams;
       const result = await getOcid({ character_name: searchText });
@@ -421,17 +446,21 @@ const Info = (props: InfoProps) => {
     switch (preSet.item) {
       case "1":
         setItemPreSet(item?.item_equipment_preset_1);
+        setNowItem(item?.item_equipment_preset_1);
         break;
       case "2":
         setItemPreSet(item?.item_equipment_preset_2);
+        setNowItem(item?.item_equipment_preset_2);
         break;
       case "3":
         setItemPreSet(item?.item_equipment_preset_3);
+        setNowItem(item?.item_equipment_preset_3);
         break;
 
       case "0":
       default:
         setItemPreSet(item?.item_equipment);
+        setNowItem(item?.item_equipment);
         break;
     }
   }, [preSet.item]);
@@ -522,6 +551,72 @@ const Info = (props: InfoProps) => {
     }
   }, [preSet.link]);
 
+  useEffect(() => {
+    const allowedEquipmentParts_1 = ["무기", "보조무기", "엠블렘"];
+    const allowedEquipmentParts_2 = ["모자", "상의", "하의", "장갑", "신발", "망토", "견장"];
+    const allowedEquipmentParts_3 = [
+      "얼굴장식",
+      "눈장식",
+      "귀고리",
+      "벨트",
+      "펜던트",
+      "펜던트2",
+      "반지1",
+      "반지2",
+      "반지3",
+      "반지4",
+      "포켓 아이템",
+      "기계 심장",
+      "뱃지",
+      "훈장",
+    ];
+
+    let filteredItems = null;
+    switch (category) {
+      case 1:
+        filteredItems = nowItem?.filter((item) => {
+          return allowedEquipmentParts_1.includes(item.item_equipment_slot);
+        });
+        break;
+      case 2:
+        filteredItems = nowItem?.filter((item) => {
+          return allowedEquipmentParts_2.includes(item.item_equipment_slot);
+        });
+        break;
+      case 3:
+        filteredItems = nowItem?.filter((item) => {
+          return allowedEquipmentParts_3.includes(item.item_equipment_slot);
+        });
+        break;
+
+      case 0:
+      default:
+        filteredItems = nowItem;
+        break;
+    }
+    setItemPreSet(filteredItems);
+  }, [category]);
+
+  if (
+    isLoading1 ||
+    isLoading2 ||
+    isLoading3 ||
+    isLoading4 ||
+    isLoading5 ||
+    isLoading6 ||
+    isLoading7 ||
+    isLoading8 ||
+    isLoading9 ||
+    isLoading10 ||
+    isLoading11
+  ) {
+    return (
+      <div className="loading-overlay">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1 bg-body-green">
       <div className="flex justify-between lg:justify-center">
@@ -540,6 +635,7 @@ const Info = (props: InfoProps) => {
               abilityPreSet={abilityPreSet}
               unionRaiderPreSet={unionRaiderPreSet}
               linkSkillPreSet={linkSkillPreSet}
+              setEffect={setEffect}
             />
             <RightInfo itemPreSet={itemPreSet} />
           </div>

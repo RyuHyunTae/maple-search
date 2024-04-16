@@ -5,6 +5,7 @@ import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
 import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";
 import { ItemData, title } from "@/interface/ItemEquipment";
 import { LinkSkill, LinkSkillDetail } from "@/interface/LinkSkill";
+import { SetEffect } from "@/interface/SetEffect";
 import { Symbol } from "@/interface/Symbol";
 import { Union } from "@/interface/Union";
 import { UnionRaider } from "@/interface/UnionRaider";
@@ -24,6 +25,7 @@ interface LeftInfoProps {
   abilityPreSet: Ability[] | undefined;
   unionRaiderPreSet: string[] | undefined;
   linkSkillPreSet: LinkSkillDetail[] | undefined;
+  setEffect: SetEffect[] | undefined;
 }
 
 const LeftInfo = (props: LeftInfoProps) => {
@@ -40,6 +42,7 @@ const LeftInfo = (props: LeftInfoProps) => {
     abilityPreSet,
     unionRaiderPreSet,
     linkSkillPreSet,
+    setEffect,
   } = props;
   const [isPopup, setIsPopup] = useState<boolean>(false);
 
@@ -244,70 +247,21 @@ const LeftInfo = (props: LeftInfoProps) => {
             적용 중인 세트효과
           </div>
         </div>
-        <div>
-          <div className="inline-flex h-[22px] w-fit min-w-[87px] items-center justify-center rounded-[10px] border px-[10px] py-[3px] text-[13px] font-bold border-[#dfdfdf] text-[#c6c6c6] bg-[#fff]">
-            무릉도장 예상 층수
-          </div>
-        </div>
       </div>
       <div className="flex w-full flex-col gap-[10px] text-[13px]">
         <div className="grid grid-cols-2 flex-col gap-[5px]">
-          <div className="flex gap-[5px]">
-            <div className="truncate" title="앱솔랩스 세트(해적)">
-              앱솔랩스 세트(해적)
-            </div>
-            <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-              5셋
-            </span>
-          </div>
-          <div className="flex gap-[5px]">
-            <div className="truncate" title="칠흑의 보스 세트">
-              칠흑의 보스 세트
-            </div>
-            <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-              4셋
-            </span>
-          </div>
-          <div className="flex gap-[5px]">
-            <div className="truncate" title="소멸의 여로 세트">
-              소멸의 여로 세트
-            </div>
-            <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-              5셋
-            </span>
-          </div>
-          <div className="flex gap-[5px]">
-            <div className="truncate" title="여명의 보스 세트">
-              여명의 보스 세트
-            </div>
-            <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-              2셋
-            </span>
-          </div>
-          <div className="flex gap-[5px]">
-            <div className="truncate" title="칠요 세트">
-              칠요 세트
-            </div>
-            <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-              2셋
-            </span>
-          </div>
-          <div className="flex gap-[5px]">
-            <div className="truncate" title="루타비스 세트(해적)">
-              루타비스 세트(해적)
-            </div>
-            <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-              4셋
-            </span>
-          </div>
-          <div className="flex gap-[5px]">
-            <div className="truncate" title="쁘띠 페어리 세트">
-              쁘띠 페어리 세트
-            </div>
-            <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-              1셋
-            </span>
-          </div>
+          {setEffect?.map((value) => {
+            return (
+              <div className="flex gap-[5px]">
+                <div className="truncate" title={value.set_name}>
+                  {value.set_name}
+                </div>
+                <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
+                  {value.total_set_count}셋
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

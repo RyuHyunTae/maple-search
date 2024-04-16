@@ -150,3 +150,8 @@ export const preSetState = atom<PreSet>({
     link: "0",
   },
 });
+
+export const categoryState = atom<number>({
+  key: "categoryState",
+  default: 0,
+});
