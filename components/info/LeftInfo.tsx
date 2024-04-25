@@ -85,10 +85,7 @@ const LeftInfo = (props: LeftInfoProps) => {
           </div>
         </div>
         <div className="flex items-center gap-[20px]">
-          <img
-            className="w-[96px] -scale-x-100 rounded-full border"
-            src={characterBasic?.character_image}
-          />
+          <img className="w-[96px] -scale-x-100 rounded-full border" src={characterBasic?.character_image} />
           <div className="flex flex-col gap-[3px] text-[13px]">
             <div className="flex items-center gap-[5px]">
               <div className="text-[17px] font-bold">{characterBasic?.character_name}</div>
@@ -99,15 +96,12 @@ const LeftInfo = (props: LeftInfoProps) => {
             </div>
             <div className="flex flex-wrap items-center gap-[5px]">
               <div className="max-w-[25rem] truncate">
-                {characterBasic?.character_class} | Lv.{characterBasic?.character_level} |{" "}
-                {characterBasic?.character_guild_name}
+                {characterBasic?.character_class} | Lv.{characterBasic?.character_level} | {characterBasic?.character_guild_name}
               </div>
             </div>
             <div className="flex flex-col gap-[4px]">
               <div className="flex gap-3">
-                <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-                  무릉도장
-                </span>
+                <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">무릉도장</span>
                 <div className="flex gap-2">
                   <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#FFE6E6] text-[#FF4D4D]">
                     {dojang?.dojang_best_floor}층
@@ -115,9 +109,7 @@ const LeftInfo = (props: LeftInfoProps) => {
                 </div>
               </div>
               <div className="flex gap-3">
-                <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">
-                  유니온
-                </span>
+                <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#E7F1FF] text-[#329DFF]">유니온</span>
                 <div className="flex gap-2">
                   <span className="w-fit flex-none rounded-[2px] p-[2px_4px] text-[11px] font-bold bg-[#FFE6E6] text-[#FF4D4D]">
                     종합 {union?.union_level}
@@ -130,13 +122,6 @@ const LeftInfo = (props: LeftInfoProps) => {
             </div>
           </div>
         </div>
-        {/* <div className="flex gap-[54px] p-[11px] text-[14px]">
-          <div className="font-bold">전투력</div>
-          <div className="flex gap-5">
-            <div className="false">2억 9444만 2997</div>
-            <div className="cursor-pointer">[적용 중인 프리셋]</div>
-          </div>
-        </div> */}
         <hr />
       </div>
       <div className="flex w-full flex-col gap-[10px] text-[13px]">
@@ -171,9 +156,7 @@ const LeftInfo = (props: LeftInfoProps) => {
                             alt="캐논 버스터"
                           />
                           <div>{value.hexa_core_level}</div>
-                          <div className="text-[10px] ">
-                            {Math.round(value.hexa_core_level * 3.3 + 1)}%
-                          </div>
+                          <div className="text-[10px] ">{Math.round(value.hexa_core_level * 3.3 + 1)}%</div>
                         </div>
                       </div>
                     );
@@ -182,22 +165,14 @@ const LeftInfo = (props: LeftInfoProps) => {
               </div>
               <div className="flex w-fit items-center divide-x rounded-[10px] border py-6">
                 <div className="flex min-w-[75px] flex-col items-center px-7">
-                  <img
-                    className="h-[35px] cursor-pointer"
-                    src="../img/sole_erda.png"
-                    alt="sole_erda"
-                  />
+                  <img className="h-[35px] cursor-pointer" src="../img/sole_erda.png" alt="sole_erda" />
                   <div>
                     <strong>{hexaSum?.base}</strong> 개
                   </div>
                 </div>
                 <div className="flex min-w-[75px] items-center px-7">
                   <div className="flex flex-col items-center">
-                    <img
-                      className="h-[35px]"
-                      src="../img/sole_erda_piece.png"
-                      alt="sole_erda_piece"
-                    />
+                    <img className="h-[35px]" src="../img/sole_erda_piece.png" alt="sole_erda_piece" />
                     <div>
                       <strong>{hexaSum?.piece}</strong> 개
                     </div>
@@ -226,10 +201,7 @@ const LeftInfo = (props: LeftInfoProps) => {
                 <div className="grid grid-cols-6 grid-rows-2 flex-wrap items-center gap-x-[5px] gap-y-[5px] self-start text-center">
                   {symbol?.symbol.map((value, idx) => {
                     return (
-                      <div
-                        className="flex flex-col items-center divide-y rounded-[10px] border p-3"
-                        key={idx}
-                      >
+                      <div className="flex flex-col items-center divide-y rounded-[10px] border p-3" key={idx}>
                         <img className="w-[28px]" src={value.symbol_icon} alt={value.symbol_name} />
                         <div>Lv.{value.symbol_level}</div>
                       </div>
@@ -250,9 +222,9 @@ const LeftInfo = (props: LeftInfoProps) => {
       </div>
       <div className="flex w-full flex-col gap-[10px] text-[13px]">
         <div className="grid grid-cols-2 flex-col gap-[5px]">
-          {setEffect?.map((value) => {
+          {setEffect?.map((value, idx) => {
             return (
-              <div className="flex gap-[5px]">
+              <div className="flex gap-[5px]" key={idx}>
                 <div className="truncate" title={value.set_name}>
                   {value.set_name}
                 </div>

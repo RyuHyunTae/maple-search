@@ -26,10 +26,7 @@ export const getItemEquipment = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/item-equipment",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/item-equipment", config);
   return data;
 };
 
@@ -39,10 +36,7 @@ export const getCharactorBasic = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/basic",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/basic", config);
   return data;
 };
 
@@ -52,10 +46,7 @@ export const getCharactorPopularity = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/popularity",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/popularity", config);
   return data;
 };
 
@@ -65,10 +56,7 @@ export const getCharactorStat = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/stat",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/stat", config);
   return data;
 };
 
@@ -78,10 +66,7 @@ export const getCharactorHyperStat = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/hyper-stat",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/hyper-stat", config);
   return data;
 };
 
@@ -91,10 +76,7 @@ export const getCharactorPropensity = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/propensity",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/propensity", config);
   return data;
 };
 
@@ -104,10 +86,7 @@ export const getCharactorAbility = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/ability",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/ability", config);
   return data;
 };
 
@@ -117,10 +96,7 @@ export const getCharactorSymbolEquipment = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/symbol-equipment",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/symbol-equipment", config);
   return data;
 };
 
@@ -130,10 +106,7 @@ export const getCharactorSetEffect = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/set-effect",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/set-effect", config);
   return data;
 };
 
@@ -143,10 +116,7 @@ export const getCharactorHexaMatrix = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/hexamatrix",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/hexamatrix", config);
   return data;
 };
 
@@ -156,10 +126,7 @@ export const getCharactorHexaMatrixStat = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/hexamatrix-stat",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/hexamatrix-stat", config);
   return data;
 };
 
@@ -169,10 +136,7 @@ export const getCharactorDojang = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/dojang",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/dojang", config);
   return data;
 };
 
@@ -182,10 +146,7 @@ export const getCharactorLinkSkill = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/character/link-skill",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/character/link-skill", config);
   return data;
 };
 
@@ -205,9 +166,6 @@ export const getUserUnionRaider = async (params: APIParams) => {
     params: { ocid, date }, // params 객체를 설정
     headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
   };
-  const { data } = await axios.get(
-    "https://open.api.nexon.com/maplestory/v1/user/union-raider",
-    config
-  );
+  const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/user/union-raider", config);
   return data;
 };

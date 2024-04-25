@@ -33,6 +33,7 @@ import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";
 import { Symbol } from "@/interface/Symbol";
 import { PreSet } from "@/interface/PreSet";
 import { SetEffect } from "@/interface/SetEffect";
+import { GetServerSideProps } from "next";
 
 interface InfoProps {
   params: {};
@@ -71,25 +72,17 @@ const Info = (props: InfoProps) => {
     data: data1,
     isLoading: isLoading1,
     isError: isError1,
-  } = useQuery(
-    ["data1", { ocid: ocid, date: props.searchParams.date }],
-    () => getItemEquipment({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data1", { ocid: ocid, date: props.searchParams.date }], () => getItemEquipment({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data2,
     isLoading: isLoading2,
     isError: isError2,
-  } = useQuery(
-    ["data2", { ocid: ocid, date: props.searchParams.date }],
-    () => getCharactorBasic({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data2", { ocid: ocid, date: props.searchParams.date }], () => getCharactorBasic({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data3,
@@ -107,73 +100,49 @@ const Info = (props: InfoProps) => {
     data: data4,
     isLoading: isLoading4,
     isError: isError4,
-  } = useQuery(
-    ["data4", { ocid: ocid, date: props.searchParams.date }],
-    () => getCharactorLinkSkill({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data4", { ocid: ocid, date: props.searchParams.date }], () => getCharactorLinkSkill({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data5,
     isLoading: isLoading5,
     isError: isError5,
-  } = useQuery(
-    ["data5", { ocid: ocid, date: props.searchParams.date }],
-    () => getCharactorAbility({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data5", { ocid: ocid, date: props.searchParams.date }], () => getCharactorAbility({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data6,
     isLoading: isLoading6,
     isError: isError6,
-  } = useQuery(
-    ["data6", { ocid: ocid, date: props.searchParams.date }],
-    () => getCharactorDojang({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data6", { ocid: ocid, date: props.searchParams.date }], () => getCharactorDojang({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data7,
     isLoading: isLoading7,
     isError: isError7,
-  } = useQuery(
-    ["data7", { ocid: ocid, date: props.searchParams.date }],
-    () => getUserUnion({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data7", { ocid: ocid, date: props.searchParams.date }], () => getUserUnion({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data8,
     isLoading: isLoading8,
     isError: isError8,
-  } = useQuery(
-    ["data8", { ocid: ocid, date: props.searchParams.date }],
-    () => getUserUnionRaider({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data8", { ocid: ocid, date: props.searchParams.date }], () => getUserUnionRaider({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data9,
     isLoading: isLoading9,
     isError: isError9,
-  } = useQuery(
-    ["data9", { ocid: ocid, date: props.searchParams.date }],
-    () => getCharactorHyperStat({ ocid: ocid, date: props.searchParams.date }),
-    {
-      enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
-    }
-  );
+  } = useQuery(["data9", { ocid: ocid, date: props.searchParams.date }], () => getCharactorHyperStat({ ocid: ocid, date: props.searchParams.date }), {
+    enabled: !!ocid, // 이 부분은 중요합니다. ocid가 변경될 때만 useQuery가 실행됩니다.
+  });
 
   const {
     data: data10,
@@ -426,9 +395,7 @@ const Info = (props: InfoProps) => {
   }, [data10]);
 
   useEffect(() => {
-    const filterSetEffect = data11?.set_effect.filter(
-      (value: SetEffect) => value.set_effect_info.length !== 0
-    );
+    const filterSetEffect = data11?.set_effect.filter((value: SetEffect) => value.set_effect_info.length !== 0);
     setSetEffect(filterSetEffect);
   }, [data11]);
 
@@ -443,6 +410,7 @@ const Info = (props: InfoProps) => {
   }, []);
 
   useEffect(() => {
+    if (item === undefined) return;
     switch (preSet.item) {
       case "1":
         setItemPreSet(item?.item_equipment_preset_1);
@@ -466,6 +434,7 @@ const Info = (props: InfoProps) => {
   }, [preSet.item]);
 
   useEffect(() => {
+    if (hyperStat === undefined) return;
     switch (preSet.hyper) {
       case "1":
         setHyperStatPreSet(hyperStat?.hyper_stat_preset_1);
@@ -497,6 +466,7 @@ const Info = (props: InfoProps) => {
   }, [preSet.hyper]);
 
   useEffect(() => {
+    if (ability === undefined) return;
     switch (preSet.ability) {
       case "1":
         setAbilityPreSet(ability?.ability_preset_1.ability_info);
@@ -516,6 +486,7 @@ const Info = (props: InfoProps) => {
   }, [preSet.ability]);
 
   useEffect(() => {
+    if (unionRaider === undefined) return;
     switch (preSet.union) {
       case "1":
         setUnionRaiderPreSet(unionRaider?.union_raider_preset_1.union_occupied_stat);
@@ -534,6 +505,7 @@ const Info = (props: InfoProps) => {
   }, [preSet.union]);
 
   useEffect(() => {
+    if (linkSkill === undefined) return;
     switch (preSet.link) {
       case "1":
         setLinkSkillPreSet(linkSkill?.character_link_skill_preset_1);
@@ -552,6 +524,7 @@ const Info = (props: InfoProps) => {
   }, [preSet.link]);
 
   useEffect(() => {
+    if (nowItem === undefined) return;
     const allowedEquipmentParts_1 = ["무기", "보조무기", "엠블렘"];
     const allowedEquipmentParts_2 = ["모자", "상의", "하의", "장갑", "신발", "망토", "견장"];
     const allowedEquipmentParts_3 = [
@@ -644,5 +617,4 @@ const Info = (props: InfoProps) => {
     </div>
   );
 };
-
 export default Info;

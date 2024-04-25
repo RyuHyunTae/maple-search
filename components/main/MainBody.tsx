@@ -4,7 +4,7 @@ import { getOcid } from "@/api/MapleApi";
 import { ocidState } from "@/recoil/states";
 import { API_KEY } from "@/util/APIKey";
 import { getCurrentDate } from "@/util/TimeUtil";
-import type { DatePickerProps } from "antd";
+import { DatePickerProps, Radio, RadioChangeEvent } from "antd";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
 
@@ -24,6 +24,12 @@ const MainBody = () => {
   const [date, setDate] = useState<string | string[]>(nowDate);
   const [searchText, setSearchText] = useState<string>("");
 
+  const [value, setValue] = useState(1);
+
+  const onChange = (e: RadioChangeEvent) => {
+    setValue(e.target.value);
+  };
+
   const handleDateChange: DatePickerProps["onChange"] = (date, dateString) => {
     setDate(dateString);
   };
@@ -35,7 +41,18 @@ const MainBody = () => {
   const handleSearch = async () => {
     // const result = await getOcid({ character_name: searchText });
     // setOcid(result.ocid);
-    router.push(`/info?searchText=${searchText}&date=${date}`);
+    switch (value) {
+      case 1:
+        router.push(`/info-csr?searchText=${searchText}&date=${date}`);
+        break;
+
+      case 2:
+        router.push(`/info-ssr?searchText=${searchText}&date=${date}`);
+        break;
+
+      default:
+        break;
+    }
   };
   return (
     <div className="flex-1 bg-body-green">
@@ -87,6 +104,10 @@ const MainBody = () => {
             <div className="flex w-[500px] flex-col gap-[13px] rounded-r-[10px] bg-white p-[30px] mo:rounded-l-[10px] mo:p-[10px]">
               <div className="mb-[10px] mt-[40px] text-center text-[40px] font-bold mo:text-[30px]">환산 주스탯</div>
               <div className="flex w-full flex-col gap-[8px] px-[48px] mo:px-[24px]">
+                <Radio.Group onChange={onChange} value={value}>
+                  <Radio value={1}>CSR</Radio>
+                  <Radio value={2}>SSR</Radio>
+                </Radio.Group>
                 <div className="flex items-center justify-start gap-4">
                   <DatePicker onChange={handleDateChange} defaultValue={dayjs(nowDate, dateFormat)} />
                   <div>데이터 기준 날짜 선택</div>
