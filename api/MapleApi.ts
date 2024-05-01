@@ -3,18 +3,20 @@ import axios, { AxiosRequestConfig } from "axios";
 
 interface GetOcidParams {
   character_name: string;
+  key: string;
 }
 
 interface APIParams {
   ocid: string;
   date: string;
+  key: string;
 }
 
 export const getOcid = async (params: GetOcidParams) => {
-  const { character_name } = params;
+  const { character_name, key } = params;
   const config: AxiosRequestConfig = {
     params: { character_name }, // params 객체를 설정
-    headers: { "x-nxopen-api-key": API_KEY }, // 헤더 정보 설정
+    headers: { "x-nxopen-api-key": key }, // 헤더 정보 설정
   };
   const { data } = await axios.get("https://open.api.nexon.com/maplestory/v1/id", config);
   return data;
