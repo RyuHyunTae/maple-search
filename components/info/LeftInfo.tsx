@@ -1,5 +1,5 @@
 import { Ability, AbilityInfo } from "@/interface/Ability";
-import { CharacterBasic } from "@/interface/character";
+import { CharacterBasic } from "@/interface/Character";
 import { Dojang } from "@/interface/Dojang";
 import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
 import { HyperStat, HyperStatDetail } from "@/interface/HyperStat";

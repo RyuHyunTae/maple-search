@@ -181,7 +181,7 @@ const MainBody = () => {
                 <span className="z-5 relative inline-block h-[21px] w-[100px] bg-white text-[15px] font-bold">사용 전 필독</span>
               </div>
               <div className="px-[48px] text-[13px] mo:px-[24px]">
-                <div className="font-black text-red-500">* 넥슨 API 데이터는 "어제"까지만 제공됩니다.</div>
+                <div className="font-black text-red-500">{`* 넥슨 API 데이터는 "어제"까지만 제공됩니다.`}</div>
                 <div className="font-black text-black">* 오랜 기간 접속하지 않은 캐릭터는 검색이 안 됩니다.</div>
                 <div className="font-black text-black">* 닉네임은 대소문자를 구분합니다.</div>
               </div>

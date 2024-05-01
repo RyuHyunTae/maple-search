@@ -18,7 +18,7 @@ import LeftInfo from "@/components/info/LeftInfo";
 import RightInfo from "@/components/info/RightInfo";
 import { HexaMatrix, HexaSum } from "@/interface/Hexamatrix";
 import { ItemData, ItemEquipment } from "@/interface/ItemEquipment";
-import { CharacterBasic } from "@/interface/character";
+import { CharacterBasic } from "@/interface/Character";
 import { categoryState, itemDetailPopupState, ocidState, preSetState } from "@/recoil/states";
 import { useEffect } from "react";
 import { useState } from "react";
