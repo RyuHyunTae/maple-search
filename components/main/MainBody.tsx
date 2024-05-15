@@ -108,7 +108,7 @@ const MainBody = () => {
               <div>Back!</div>
             </div>
             <div className="flex w-[500px] flex-col gap-[13px] rounded-r-[10px] bg-white p-[30px] mo:rounded-l-[10px] mo:p-[10px]">
-              <div className="mb-[10px] mt-[40px] text-center text-[40px] font-bold mo:text-[30px]">환산 주스탯</div>
+              <div className="mb-[10px] mt-[40px] text-center text-[40px] font-bold mo:text-[30px]">MapleStory</div>
               <div className="flex w-full flex-col gap-[8px] px-[48px] mo:px-[24px]">
                 <Radio.Group onChange={onChange} value={value}>
                   <Radio value={1}>CSR</Radio>
@@ -172,7 +172,7 @@ const MainBody = () => {
                     disabled={!isApiKey}
                     style={isApiKey ? {} : { opacity: 0.5 }}
                   />
-                  <button className="absolute right-[13px] top-[13px] w-[18px]" onClick={handleSearch}>
+                  <button className="absolute right-[13px] top-[13px] w-[18px]" onClick={handleSearch} disabled={!isApiKey}>
                     <img src="../img/icon_search_gray.png" title="검색하기" />
                   </button>
                 </div>
